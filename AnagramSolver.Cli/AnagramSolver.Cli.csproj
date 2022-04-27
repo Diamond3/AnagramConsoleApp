@@ -15,15 +15,22 @@
     <ItemGroup>
       <PackageReference Include="Microsoft.Extensions.Configuration" Version="7.0.0-preview.3.22175.4" />
       <PackageReference Include="Microsoft.Extensions.Configuration.Binder" Version="7.0.0-preview.3.22175.4" />
+      <PackageReference Include="Microsoft.Extensions.Configuration.EnvironmentVariables" Version="7.0.0-preview.3.22175.4" />
       <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="7.0.0-preview.3.22175.4" />
       <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="7.0.0-preview.3.22175.4" />
     </ItemGroup>
 
     <ItemGroup>
-      <None Update="appsettings.json">
+      <None Update="zodynas.txt">
         <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       </None>
-      <None Update="zodynas.txt">
+      <None Update="appsettings.prod.json">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </None>
+      <None Update="appsettings.dev.json">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </None>
+      <None Update="appsettings.json">
         <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       </None>
     </ItemGroup>

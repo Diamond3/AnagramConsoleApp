@@ -31,7 +31,7 @@ public class AnagramSolverTests
         var actual = solver.Solve("laivasa", hashSet);
         
         //assert
-        Assert.AreEqual(actual.Count, 0);
+        Assert.AreEqual(0, actual.Count);
     }
     
     [Test]

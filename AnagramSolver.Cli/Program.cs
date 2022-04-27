@@ -17,9 +17,17 @@ services
     .AddScoped<IAnagramSolver, AnagramSolver.BusinessLogic.Logic.AnagramSolver>()
     .BuildServiceProvider();
 
-IConfiguration config = new ConfigurationBuilder()
-    .SetBasePath(Directory.GetCurrentDirectory())
-    .AddJsonFile("appsettings.json", optional: false).Build();
+var environment = Environment.GetEnvironmentVariable("NETCORE_ENVIRONMENT");
+
+var builder = new ConfigurationBuilder()
+    .AddJsonFile("appsettings.json", false, true)
+    .AddJsonFile($"appsettings.{environment}.json", false, true)
+    .AddEnvironmentVariables();
+
+var config = builder.Build();
+
+Console.WriteLine($"Environment: {environment}");
+Console.WriteLine($"{config.GetValue<string>("Message")}");
 
 var settings = config.GetSection("UserSettings").Get<UserSettings>();
 
