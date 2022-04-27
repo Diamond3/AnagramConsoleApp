@@ -4,7 +4,7 @@ using AnagramSolver.Contracts.Interfaces;
 
 namespace AnagramSolver.BusinessLogic.Logic;
 
-public class AnagramSolverNew: IAnagramSolver
+public class AnagramSolver: IAnagramSolver
 {
     public List<string> Solve(string input, HashSet<string> dataSet)
     {
@@ -13,7 +13,7 @@ public class AnagramSolverNew: IAnagramSolver
         // var st = new Stopwatch();
         // st.Start();
         
-        var inputArray = input.ToArray();
+        var inputArray = input.ToLower().ToArray();
         Array.Sort(inputArray);
 
         foreach (var word in dataSet)

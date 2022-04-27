@@ -14,7 +14,7 @@ Console.InputEncoding = Encoding.Unicode;
 
 services
     .AddScoped<IDataAccess<HashSet<string>>, DataAccessHashSet>()
-    .AddScoped<IAnagramSolver, AnagramSolver.BusinessLogic.Logic.AnagramSolverNew>()
+    .AddScoped<IAnagramSolver, AnagramSolver.BusinessLogic.Logic.AnagramSolver>()
     .BuildServiceProvider();
 
 IConfiguration config = new ConfigurationBuilder()
