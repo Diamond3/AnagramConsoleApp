@@ -1,20 +1,18 @@
-﻿using System.Diagnostics;
-using System.Text;
-using AnagramSolver.BusinessLogic.DataAccess;
+﻿using AnagramSolver.BusinessLogic.DataAccess;
+using AnagramSolver.BusinessLogic.Logic;
 using AnagramSolver.BusinessLogic.Repositories;
+using AnagramSolver.Cli;
 using AnagramSolver.Contracts.Interfaces;
-using AnagramSolver.Contracts.Models;
-using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
 
 var services = new ServiceCollection();
 
-Console.OutputEncoding = Encoding.Unicode;
-Console.InputEncoding = Encoding.Unicode;
 
 services
     .AddScoped<IDataAccess<HashSet<string>>, DataAccessHashSet>()
-    .AddScoped<IAnagramSolver, AnagramSolver.BusinessLogic.Logic.AnagramSolver>()
+    .AddScoped<IWordRepository, WordRepository>()
+    .AddScoped<IAnagramSolverLogic, AnagramSolverLogic>()
     .BuildServiceProvider();
 
 var environment = Environment.GetEnvironmentVariable("NETCORE_ENVIRONMENT");
@@ -26,31 +24,11 @@ var builder = new ConfigurationBuilder()
 
 var config = builder.Build();
 
-Console.WriteLine($"Environment: {environment}");
-Console.WriteLine($"{config.GetValue<string>("Message")}");
-
+var message = config.GetValue<string>("Message");
+var filePath = config.GetValue<string>("FilePath");
 var settings = config.GetSection("UserSettings").Get<UserSettings>();
 
-IWordRepository repo = new WordRepository(services.BuildServiceProvider().GetRequiredService<IAnagramSolver>(),
-    services.BuildServiceProvider().GetRequiredService<IDataAccess<HashSet<string>>>());
+var view = new AnagramSolverView(services.BuildServiceProvider().GetRequiredService<IAnagramSolverLogic>());
 
-while (true)
-{
-    var input = Console.ReadLine();
-    while (input.Length < settings.MinLength)
-    {
-        Console.WriteLine("Word is too short!");
-        input = Console.ReadLine();
-    }
-
-    var list = repo.GetAnagrams(input.ToLower());
-    
-    if (list.Count > 0)
-    {
-        list.Take(settings.AnagramCount).ToList().ForEach(Console.WriteLine);
-        Console.WriteLine();
-    }
-    else
-        Console.WriteLine("No anagrams were found!");
-    Console.WriteLine("------------");
-}
+view.LoadView(environment, message);
+view.FindAnagrams(settings, filePath);

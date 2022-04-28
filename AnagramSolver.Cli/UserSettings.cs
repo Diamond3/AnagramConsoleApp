@@ -1,4 +1,4 @@
-namespace AnagramSolver.Contracts.Models;
+namespace AnagramSolver.Cli;
 
 public class UserSettings
 {

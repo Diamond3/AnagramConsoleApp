@@ -1,4 +1,7 @@
 using System.Collections.Generic;
+using AnagramSolver.BusinessLogic.Logic;
+using AnagramSolver.Contracts.Interfaces;
+using Moq;
 using NUnit.Framework;
 using Shouldly;
 
@@ -10,14 +13,19 @@ public class AnagramSolverUsingShouldly
     public void Solve_TwoAnagrams_FindsTwoAnagrams()
     {
         //arrange
-        var solver = new BusinessLogic.Logic.AnagramSolver();
-        var expectedAnagrams = new List<string>() { "laivas", "vailas" };
-        var hashSet = new HashSet<string>() { "valia", "vailas", "laiivas", "lavas", "laivas" };
-        
+        var hashSet = new HashSet<string> { "valia", "vailas", "laiivas", "lavas", "laivas", "balas", "tyras" };
+
+        var repo = new Mock<IWordRepository>();
+        repo.Setup(x => x.GetWords(It.IsAny<string>())).Returns(hashSet);
+        var solver = new AnagramSolverLogic(repo.Object);
+        solver.LoadData(It.IsAny<string>());
+
+        var expectedAnagrams = new List<string> { "laivas", "vailas" };
+
         //act
-        var result = solver.Solve("svaila", hashSet);
-        
+        var result = solver.Solve("svaila");
+
         //assert
-        result.ShouldBe(expectedAnagrams, ignoreOrder: true);
+        result.ShouldBe(expectedAnagrams, true);
     }
 }
