@@ -12,10 +12,14 @@ var services = new ServiceCollection();
 
 services
     .AddScoped<IDataAccess<HashSet<string>>, DataAccessHashSet>()
-    .AddScoped<IWordRepository, WordRepository>()
+    /*.AddScoped<IWordRepository, WordRepository>()*/
     .AddScoped<IWordsService, WordsService>()
     .AddScoped<IAnagramSolverLogic, AnagramSolverLogic>()
+    .AddScoped<IWordRepository>(sp 
+        => new WordRepository(sp.GetService<IDataAccess<HashSet<string>>>(),"zodynas.txt"))
     .BuildServiceProvider();
+
+
 
 var environment = Environment.GetEnvironmentVariable("NETCORE_ENVIRONMENT");
 

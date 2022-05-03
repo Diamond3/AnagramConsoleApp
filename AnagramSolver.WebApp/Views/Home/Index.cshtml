@@ -13,10 +13,12 @@
     <p><b>Anagrams of word: @Model.Word</b></p>
     @if (Model.Anagrams.Count > 0)
     {
+        <ul>
         @foreach (var item in Model.Anagrams)
         {
             <li>@item</li>
         }
+        </ul>
     }
     else
     {

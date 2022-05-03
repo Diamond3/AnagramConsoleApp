@@ -8,7 +8,7 @@ public class AnagramSolverLogic : IAnagramSolverLogic
     {
         
     }
-    public List<string> Solve(string input, HashSet<string> words)
+    public List<string> Solve(string input, IEnumerable<string> words)
     {
         var anagrams = new List<string>();
 

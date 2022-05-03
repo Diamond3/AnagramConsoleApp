@@ -10,13 +10,15 @@ builder.Services.AddControllersWithViews();
 
 builder.Services
     .AddScoped<IDataAccess<HashSet<string>>, DataAccessHashSet>()
-    .AddScoped<IWordRepository, WordRepository>()
     .AddScoped<IWordsService, WordsService>()
-    .AddScoped<IAnagramSolverLogic, AnagramSolverLogic>();
+    .AddScoped<IAnagramSolverLogic, AnagramSolverLogic>()
+    .AddScoped<IWordRepository>(sp
+        => new WordRepository(sp.GetService<IDataAccess<HashSet<string>>>(), "zodynas.txt"));
 
 var app = builder.Build();
 
 IConfiguration configuration = app.Configuration;
+/*configuration.GetSection()*/
 
 app.MapControllerRoute(
     name: "default",

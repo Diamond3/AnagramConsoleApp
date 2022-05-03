@@ -15,4 +15,8 @@ public class WordsService: IWordsService
     {
         return _repo.GetWords();
     }
+    public void AddWord(string word)
+    { 
+        _repo.AddWord(word);
+    }
 }

@@ -6,17 +6,22 @@ namespace AnagramSolver.BusinessLogic.Repositories;
 public class WordRepository : IWordRepository
 {
     private readonly IDataAccess<HashSet<string>> _data;
-    private readonly HashSet<string> _words;
+    /*private readonly HashSet<string> _words;*/
+    private readonly string _filePath;
 
-    public WordRepository(IDataAccess<HashSet<string>> data)
+    public WordRepository(IDataAccess<HashSet<string>> data, string filePath)
     {
-        var filePath = "zodynas.txt";
+        _filePath = filePath;
         _data = data;
-        _words = _data.ReadFile(filePath);
     }
 
     public HashSet<string> GetWords()
     {
-        return _words;
+        return _data.ReadFile(_filePath);;
+    }
+
+    public void AddWord(string word)
+    {
+        _data.AddWordToFile(_filePath, word);
     }
 }

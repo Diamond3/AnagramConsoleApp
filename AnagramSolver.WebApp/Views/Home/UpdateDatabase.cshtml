@@ -1,0 +1,15 @@
+@using System.Drawing
+@model AnagramSolver.WebApp.Models.WordList
+
+@{
+    Layout = "_Layout";
+}
+
+<div>
+    <p><b>Add new word to the database</b></p>
+    <form method="post" enctype="multipart/form-data" asp-controller="Home" asp-action="UpdateDatabase">
+        Word: <input type="text" id="txtWord" name="Word"/>
+        <input type="submit" value="Add"/>
+    </form>
+    <p>@Html.ValidationMessage("Error")</p>
+</div>
