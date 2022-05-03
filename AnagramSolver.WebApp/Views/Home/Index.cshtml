@@ -1,0 +1,25 @@
+@model AnagramSolver.WebApp.Models.WordList
+
+@{
+    Layout = "_Layout";
+}
+
+<div>
+    <form method="post" enctype="multipart/form-data" asp-controller="Home" asp-action="Index">
+        Word: <input type="text" id="txtWord" name="Word"/>
+        <input type="submit" value="Search"/>
+    </form>
+
+    <p><b>Anagrams of word: @Model.Word</b></p>
+    @if (Model.Anagrams.Count > 0)
+    {
+        @foreach (var item in Model.Anagrams)
+        {
+            <li>@item</li>
+        }
+    }
+    else
+    {
+        <p>No anagrams were found</p>
+    }
+</div>

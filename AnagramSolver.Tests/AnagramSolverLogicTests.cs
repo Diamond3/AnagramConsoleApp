@@ -9,18 +9,18 @@ namespace AnagramSolver.Tests;
 public class AnagramSolverLogicTests
 {
     private AnagramSolverLogic _solver;
+    private HashSet<string> _hashSet;
 
     [SetUp]
     public void SetUp()
     {
-        var hashSet = new HashSet<string> { "valia", "vailas", "laiivas", "lavas", "laivas", "balas", "tyras" };
+        _hashSet = new HashSet<string> { "valia", "vailas", "laiivas", "lavas", "laivas", "balas", "tyras" };
 
         var repo = new Mock<IWordRepository>();
-        repo.Setup(x => x.GetWords(It.IsAny<string>())).Returns(hashSet);
+        repo.Setup(x => x.GetWords()).Returns(_hashSet);
 
-        _solver = new AnagramSolverLogic(repo.Object);
+        _solver = new AnagramSolverLogic();
         
-        _solver.LoadData(It.IsAny<string>());
     }
 
     [Test]
@@ -30,7 +30,7 @@ public class AnagramSolverLogicTests
         var expected = new List<string> { "laivas", "vailas" };
 
         //act
-        var actual = _solver.Solve("svaila");
+        var actual = _solver.Solve("svaila", _hashSet);
 
         //assert
         CollectionAssert.AreEquivalent(expected, actual);
@@ -40,7 +40,7 @@ public class AnagramSolverLogicTests
     public void Solve_NoAnagrams_FindsZeroAnagrams()
     {
         //act
-        var actual = _solver.Solve("laivasa");
+        var actual = _solver.Solve("laivasa", _hashSet);
 
         //assert
         Assert.AreEqual(0, actual.Count);
@@ -53,7 +53,7 @@ public class AnagramSolverLogicTests
         var expected = new List<string> { "valia" };
 
         //act
-        var actual = _solver.Solve("vAlAi");
+        var actual = _solver.Solve("vAlAi", _hashSet);
 
         //assert
         CollectionAssert.AreEquivalent(expected, actual);
@@ -67,7 +67,7 @@ public class AnagramSolverLogicTests
         var expected = new List<string> { "balas tyras" };
 
         //act
-        var actual = _solver.Solve("labas rytas");
+        var actual = _solver.Solve("labas rytas", _hashSet);
 
         //assert
         CollectionAssert.AreEquivalent(expected, actual);

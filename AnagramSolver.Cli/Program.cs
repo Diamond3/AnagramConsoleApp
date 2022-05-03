@@ -1,4 +1,5 @@
-﻿using AnagramSolver.BusinessLogic.DataAccess;
+﻿using AnagramSolver.BusinessLogic;
+using AnagramSolver.BusinessLogic.DataAccess;
 using AnagramSolver.BusinessLogic.Logic;
 using AnagramSolver.BusinessLogic.Repositories;
 using AnagramSolver.Cli;
@@ -12,6 +13,7 @@ var services = new ServiceCollection();
 services
     .AddScoped<IDataAccess<HashSet<string>>, DataAccessHashSet>()
     .AddScoped<IWordRepository, WordRepository>()
+    .AddScoped<IWordsService, WordsService>()
     .AddScoped<IAnagramSolverLogic, AnagramSolverLogic>()
     .BuildServiceProvider();
 
@@ -28,7 +30,8 @@ var message = config.GetValue<string>("Message");
 var filePath = config.GetValue<string>("FilePath");
 var settings = config.GetSection("UserSettings").Get<UserSettings>();
 
-var view = new AnagramSolverView(services.BuildServiceProvider().GetRequiredService<IAnagramSolverLogic>());
+var view = new AnagramSolverView(services.BuildServiceProvider().GetRequiredService<IWordsService>(),
+    services.BuildServiceProvider().GetRequiredService<IAnagramSolverLogic>());
 
 view.LoadView(environment, message);
 view.FindAnagrams(settings, filePath);

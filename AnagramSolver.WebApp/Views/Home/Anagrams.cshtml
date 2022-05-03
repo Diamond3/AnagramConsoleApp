@@ -1,0 +1,36 @@
+@model AnagramSolver.WebApp.Models.PaginatedList<string>
+
+@{
+    Layout = "_Layout";
+}
+<div>
+<p><b>List of Anagrams</b></p>
+    
+    @if (Model.Count > 0)
+    {
+        @foreach (var item in Model)
+        {
+            <li>
+                @Html.ActionLink(@item, "Index",
+                         "Home", new { word = @item },
+                         null)
+            </li>
+        }
+    }
+    else
+    {
+        <p>No words in database</p>
+    }
+    @if (Model.HasPreviousPage)
+    {
+        <span style="margin-right: 15px;">@Html.ActionLink("Previous", "Anagrams",
+            "Home", new { pageNumber = (Model.PageIndex - 1)},
+            null)</span>
+    }
+    @if (Model.HasNextPage)
+    {
+        @Html.ActionLink("Next", "Anagrams",
+            "Home", new { pageNumber = (Model.PageIndex + 1) },
+            null)
+    }
+</div>

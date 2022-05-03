@@ -5,10 +5,12 @@ namespace AnagramSolver.Cli;
 
 public class AnagramSolverView
 {
+    private readonly IWordsService _service;
     private readonly IAnagramSolverLogic _anagramSolver;
 
-    public AnagramSolverView(IAnagramSolverLogic anagramSolver)
+    public AnagramSolverView(IWordsService service, IAnagramSolverLogic anagramSolver)
     {
+        _service = service;
         _anagramSolver = anagramSolver;
     }
 
@@ -29,7 +31,6 @@ public class AnagramSolverView
 
     public void FindAnagrams(UserSettings? settings, string? filePath)
     {
-        _anagramSolver.LoadData(filePath);
         while (true)
         {
             if (settings == null)
@@ -47,7 +48,7 @@ public class AnagramSolverView
 
             try
             {
-                var list = _anagramSolver.Solve(input);
+                var list = _anagramSolver.Solve(input, _service.GetAllWords());
                 if (list.Count > 0)
                 {
                     list.Take(settings.AnagramCount).ToList().ForEach(Console.WriteLine);

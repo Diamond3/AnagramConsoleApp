@@ -16,14 +16,13 @@ public class AnagramSolverUsingShouldly
         var hashSet = new HashSet<string> { "valia", "vailas", "laiivas", "lavas", "laivas", "balas", "tyras" };
 
         var repo = new Mock<IWordRepository>();
-        repo.Setup(x => x.GetWords(It.IsAny<string>())).Returns(hashSet);
-        var solver = new AnagramSolverLogic(repo.Object);
-        solver.LoadData(It.IsAny<string>());
+        repo.Setup(x => x.GetWords()).Returns(hashSet);
+        var solver = new AnagramSolverLogic();
 
         var expectedAnagrams = new List<string> { "laivas", "vailas" };
 
         //act
-        var result = solver.Solve("svaila");
+        var result = solver.Solve("svaila", hashSet);
 
         //assert
         result.ShouldBe(expectedAnagrams, true);

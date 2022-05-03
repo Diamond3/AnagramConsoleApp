@@ -4,31 +4,24 @@ namespace AnagramSolver.BusinessLogic.Logic;
 
 public class AnagramSolverLogic : IAnagramSolverLogic
 {
-    private readonly IWordRepository _repo;
-    private HashSet<string> _words;
-
-    public AnagramSolverLogic(IWordRepository repo)
+    public AnagramSolverLogic()
     {
-        _repo = repo;
+        
     }
-
-    public void LoadData(string filePath)
-    {
-        _words = _repo.GetWords(filePath);
-    }
-    public List<string> Solve(string input)
+    public List<string> Solve(string input, HashSet<string> words)
     {
         var anagrams = new List<string>();
 
         var inputArray = input.ToLower().ToArray();
         Array.Sort(inputArray);
 
-        foreach (var word in _words)
+        foreach (var word in words)
         {
             var wordArray = word.ToLower().ToArray();
             Array.Sort(wordArray);
 
-            if (input != word.ToLower() && inputArray.SequenceEqual(wordArray)) anagrams.Add(word);
+            if (!string.Equals(input, word, StringComparison.CurrentCultureIgnoreCase)
+                && inputArray.SequenceEqual(wordArray)) anagrams.Add(word);
         }
 
         return anagrams;
