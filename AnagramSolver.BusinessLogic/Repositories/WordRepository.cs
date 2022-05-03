@@ -15,9 +15,9 @@ public class WordRepository : IWordRepository
         _data = data;
     }
 
-    public HashSet<string> GetWords()
+    public List<string> GetWords()
     {
-        return _data.ReadFile(_filePath);;
+        return _data.ReadFile(_filePath).ToList();
     }
 
     public void AddWord(string word)

@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using AnagramSolver.BusinessLogic.Logic;
 using AnagramSolver.Contracts.Interfaces;
 using AnagramSolver.WebApp.Controllers;
@@ -15,36 +16,34 @@ public class AnagramSolverHomeControllerTests
     [SetUp]
     public void SetUp()
     {
-        var repo = new Mock<IWordRepository>();
-        var serv = new Mock<IWordsService>();
+        var wordServiceMock = new Mock<IWordsService>();
         var solver = new AnagramSolverLogic();
-        var hashSet = new HashSet<string> { "valia", "vailas", "laiivas", "lavas", "laivas", "balas", "tyras" };
+        var words = new HashSet<string> { "valia", "vailas", "laiivas", "lavas", "laivas", "balas", "tyras" };
 
-        _controller = new HomeController(serv.Object, solver);
-        serv.Setup(x => x.GetAllWords()).Returns(hashSet);
-        
+        _controller = new HomeController(wordServiceMock.Object, solver);
+        wordServiceMock.Setup(x => x.GetAllWords()).Returns(words.ToList());
     }
     [Test]
     public void TestIndex_NullString_EmptyView()
     {
         //act
-        var actual = _controller.Index(null) as ViewResult;
+        var result = _controller.Index(null) as ViewResult;
         
         //assert
-        Assert.AreEqual(null, actual);
+        Assert.IsNull(result);
     }
     
     [Test]
-    public void TestIndex_OneWord_EmptyView()
+    public void TestIndex_OneWord_ReturnsModelWithTwoValues()
     {
         //arrange
-        var expected = new List<string> { "laivas", "vailas" };
+        var expectedWords = new List<string> { "laivas", "vailas" };
 
         //act
         var result = _controller.Index("svaila") as ViewResult;
-        var actual = (WordList)result.Model;
+        var actualWords = (WordList)result.Model;
         
         //assert
-        CollectionAssert.AreEquivalent(expected, actual.Anagrams);
+        CollectionAssert.AreEquivalent(expectedWords, actualWords.Anagrams);
     }
 }

@@ -11,12 +11,23 @@ public class WordsService: IWordsService
         _repo = repo;
     }
 
-    public HashSet<string> GetAllWords()
+    public List<string> GetAllWords()
     {
         return _repo.GetWords();
     }
-    public void AddWord(string word)
+    
+    public bool AddWord(string word)
     { 
-        _repo.AddWord(word);
+        if (GetAllWords().Contains(word.ToLower())) return false;
+        try
+        {
+            _repo.AddWord(word);
+        }
+        catch (Exception)
+        {
+            return false;
+        }
+
+        return true;
     }
 }

@@ -22,13 +22,12 @@ public class HomeController : Controller
             return new EmptyResult();
 
         ViewData["Title"] = "Word";
-        ViewData["Word"] = word;
 
-        var wordsSet = _wordService.GetAllWords();
+        var wordsList = _wordService.GetAllWords();
         var wordModel = new WordList
         {
             Word = word,
-            Anagrams = _solver.Solve(word, wordsSet)
+            Anagrams = _solver.Solve(word, wordsList)
         };
         return View(wordModel);
     }
@@ -41,29 +40,20 @@ public class HomeController : Controller
     }
 
     [HttpGet]
-    public IActionResult UpdateDatabase()
+    public IActionResult AddWord()
     {
         ViewData["Title"] = "Database";
         return View();
     }
 
     [HttpPost]
-    public IActionResult UpdateDatabase(string? word)
+    public IActionResult AddWord(string? word)
     {
         ViewData["Title"] = "Database";
         if (string.IsNullOrEmpty(word))
             ModelState.AddModelError("Error", "Empty word!");
-        else if (_wordService.GetAllWords().Contains(word.ToLower()))
-            ModelState.AddModelError("Error", "Word is already in database!");
-        else
-            try
-            {
-                _wordService.AddWord(word);
-            }
-            catch (Exception)
-            {
-                ModelState.AddModelError("Error", "Couldn't save the word!");
-            }
+        else if (!_wordService.AddWord(word))
+            ModelState.AddModelError("Error", "Couldn't save the word!");
 
         return View();
     }

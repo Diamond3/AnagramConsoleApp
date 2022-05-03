@@ -2,6 +2,6 @@ namespace AnagramSolver.Contracts.Interfaces;
 
 public interface IWordRepository
 {
-    HashSet<string> GetWords();
+    List<string> GetWords();
     void AddWord(string word);
 }

@@ -10,6 +10,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AnagramSolver.Tests", "Anag
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AnagramSolver.WebApp", "AnagramSolver.WebApp\AnagramSolver.WebApp.csproj", "{79AD20AA-4120-4F54-BC19-BEB70B94145D}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AnagramSolver.WebApp.Tests", "AnagramSolver.WebApp.Tests\AnagramSolver.WebApp.Tests.csproj", "{E51E6669-7EF6-4FF8-AA37-009646D552C5}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -36,5 +38,9 @@ Global
 		{79AD20AA-4120-4F54-BC19-BEB70B94145D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{79AD20AA-4120-4F54-BC19-BEB70B94145D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{79AD20AA-4120-4F54-BC19-BEB70B94145D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E51E6669-7EF6-4FF8-AA37-009646D552C5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E51E6669-7EF6-4FF8-AA37-009646D552C5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E51E6669-7EF6-4FF8-AA37-009646D552C5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E51E6669-7EF6-4FF8-AA37-009646D552C5}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
