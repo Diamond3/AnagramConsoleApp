@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using AnagramSolver.BusinessLogic.Logic;
 using AnagramSolver.Contracts.Interfaces;
 using AnagramSolver.WebApp.Controllers;
+using AnagramSolver.WebApp.Models;
 using Microsoft.AspNetCore.Mvc;
 using Moq;
 using NUnit.Framework;
@@ -41,9 +42,9 @@ public class AnagramSolverHomeControllerTests
 
         //act
         var result = _controller.Index("svaila") as ViewResult;
-        var actual = (List<string>)result.Model;
+        var actual = (WordList)result.Model;
         
         //assert
-        CollectionAssert.AreEquivalent(expected, actual);
+        CollectionAssert.AreEquivalent(expected, actual.Anagrams);
     }
 }
