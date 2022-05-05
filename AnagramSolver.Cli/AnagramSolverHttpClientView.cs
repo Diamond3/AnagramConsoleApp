@@ -1,17 +1,15 @@
 using System.Text;
 using AnagramSolver.Contracts.Interfaces;
+using Newtonsoft.Json;
 
 namespace AnagramSolver.Cli;
 
-public class AnagramSolverView
+public class AnagramSolverHttpClientView
 {
-    private readonly IWordsService _service;
-    private readonly IAnagramSolverLogic _anagramSolver;
+    static readonly HttpClient client = new HttpClient();
 
-    public AnagramSolverView(IWordsService service, IAnagramSolverLogic anagramSolver)
+    public AnagramSolverHttpClientView()
     {
-        _service = service;
-        _anagramSolver = anagramSolver;
     }
 
     public void LoadView(string? env, string? message)
@@ -29,14 +27,14 @@ public class AnagramSolverView
         Console.WriteLine(message);
     }
 
-    public Task FindAnagrams(UserSettings? settings, string? filePath)
+    public async Task FindAnagrams(UserSettings? settings, string? filePath)
     {
         while (true)
         {
             if (settings == null)
             {
                 Console.WriteLine("Settings were not found!");
-                return Task.CompletedTask;
+                return;
             }
 
             var input = Console.ReadLine();
@@ -48,7 +46,8 @@ public class AnagramSolverView
 
             try
             {
-                var list = _anagramSolver.Solve(input, _service.GetAllWords());
+                //var list = _anagramSolver.Solve(input, _service.GetAllWords());
+                var list = await GetAnagramsRequest($"https://localhost:7147/api/homeapi/{input}");
                 if (list.Count > 0)
                 {
                     list.Take(settings.AnagramCount).ToList().ForEach(Console.WriteLine);
@@ -70,5 +69,11 @@ public class AnagramSolverView
                 Console.WriteLine("Something went wrong!");
             }
         }
+    }
+    private static async Task<List<string>> GetAnagramsRequest(string uri)
+    {
+        var responseBody = await client.GetStringAsync(uri);
+        var anagramsList = JsonConvert.DeserializeObject<List<string>>(responseBody);
+        return anagramsList ?? new List<string>();
     }
 }

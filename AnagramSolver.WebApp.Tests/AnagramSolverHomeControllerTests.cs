@@ -17,10 +17,11 @@ public class AnagramSolverHomeControllerTests
     public void SetUp()
     {
         var wordServiceMock = new Mock<IWordsService>();
+        var cookieServiceMock = new Mock<ICookieService>();
         var solver = new AnagramSolverLogic();
         var words = new HashSet<string> { "valia", "vailas", "laiivas", "lavas", "laivas", "balas", "tyras" };
 
-        _controller = new HomeController(wordServiceMock.Object, solver);
+        _controller = new HomeController(wordServiceMock.Object, solver, cookieServiceMock.Object);
         wordServiceMock.Setup(x => x.GetAllWords()).Returns(words.ToList());
     }
     [Test]

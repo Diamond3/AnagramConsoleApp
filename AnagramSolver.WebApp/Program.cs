@@ -11,6 +11,8 @@ builder.Services.AddControllersWithViews();
 builder.Services
     .AddScoped<IDataAccess<HashSet<string>>, DataAccessHashSet>()
     .AddScoped<IWordsService, WordsService>()
+    .AddScoped<IFileService, FileService>()
+    .AddScoped<ICookieService, CookieService>()
     .AddScoped<IAnagramSolverLogic, AnagramSolverLogic>()
     .AddScoped<IWordRepository>(sp
         => new WordRepository(sp.GetService<IDataAccess<HashSet<string>>>(), "zodynas.txt"));
@@ -20,6 +22,7 @@ var app = builder.Build();
 IConfiguration configuration = app.Configuration;
 /*configuration.GetSection()*/
 
+app.UseStaticFiles();
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Anagrams}/{word?}",

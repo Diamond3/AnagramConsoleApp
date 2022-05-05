@@ -34,8 +34,10 @@ var message = config.GetValue<string>("Message");
 var filePath = config.GetValue<string>("FilePath");
 var settings = config.GetSection("UserSettings").Get<UserSettings>();
 
-var view = new AnagramSolverView(services.BuildServiceProvider().GetRequiredService<IWordsService>(),
-    services.BuildServiceProvider().GetRequiredService<IAnagramSolverLogic>());
+/*var view = new AnagramSolverView(services.BuildServiceProvider().GetRequiredService<IWordsService>(),
+    services.BuildServiceProvider().GetRequiredService<IAnagramSolverLogic>());*/
+
+var view = new AnagramSolverHttpClientView();
 
 view.LoadView(environment, message);
-view.FindAnagrams(settings, filePath);
+await view.FindAnagrams(settings, filePath);

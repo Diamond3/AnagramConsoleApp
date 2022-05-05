@@ -1,5 +1,3 @@
-using Microsoft.AspNetCore.Mvc;
-
 namespace AnagramSolver.WebApp.Models;
 public class WordList
 {
