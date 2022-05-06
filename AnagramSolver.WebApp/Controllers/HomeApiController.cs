@@ -1,3 +1,5 @@
+using AnagramSolver.BusinessLogic.DataAccess;
+using AnagramSolver.BusinessLogic.Repositories;
 using AnagramSolver.Contracts;
 using AnagramSolver.Contracts.Interfaces;
 using AnagramSolver.Contracts.Models;
@@ -11,19 +13,39 @@ namespace AnagramSolver.WebApp.Controllers
     public class HomeApiController : ControllerBase
     {
         private readonly IAnagramSolverLogic _solver;
-        private readonly IWordsService _wordService;
+        private readonly IWordsServiceOld _wordService;
         private readonly IFileService _fileService;
         
-        public HomeApiController(IWordsService service, IAnagramSolverLogic anagramSolver, IFileService fileService)
+        private readonly WordRepository _wordRepoSql = new(); //use WordService instead of repo
+        
+        public HomeApiController(IWordsServiceOld service, IAnagramSolverLogic anagramSolver, IFileService fileService)
         {
             _wordService = service;
             _solver = anagramSolver;
             _fileService = fileService;
         }
         
+        //---- using SQL database
+        // api/homeapi/sql
+        [HttpGet("sql")]
+        public IEnumerable<WordModel> GetWords()
+        {
+            return _wordRepoSql.GetWords();
+        }
+        
+        // api/homeapi/sql/addAll
+        [HttpGet("sql/addAll")]
+        public void AddAllWordsToDb() //move form .txt to database
+        {
+            var data = new DataAccessHashSet();
+            var models = data.ReadFileToList("zodynas.txt");
+            _wordRepoSql.AddAllWordModels(models);
+        }
+        //----
+        
         // api/homeapi
         [HttpGet]
-        public IEnumerable<string>Get()
+        public IEnumerable<string> Get()
         {
             return _wordService.GetAllWords().Take(50);
         }

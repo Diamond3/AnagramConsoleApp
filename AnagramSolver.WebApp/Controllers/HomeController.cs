@@ -3,6 +3,8 @@ using AnagramSolver.WebApp.Models;
 using Microsoft.AspNetCore.Mvc;
 using System.Web;
 using AnagramSolver.BusinessLogic;
+using AnagramSolver.BusinessLogic.Repositories;
+using AnagramSolver.Contracts.Models;
 
 namespace AnagramSolver.WebApp.Controllers;
 
@@ -10,10 +12,11 @@ public class HomeController : Controller
 {
     private const int PageSize = 34;
     private readonly IAnagramSolverLogic _solver;
-    private readonly IWordsService _wordService;
+    private readonly IWordsServiceOld _wordService;
     private readonly ICookieService _cookieService;
 
-    public HomeController(IWordsService service, IAnagramSolverLogic anagramSolver, ICookieService cookieService)
+    private readonly WordRepository _wordRepoSql = new(); //use WordService instead of repo
+    public HomeController(IWordsServiceOld service, IAnagramSolverLogic anagramSolver, ICookieService cookieService)
     {
         _wordService = service;
         _solver = anagramSolver;
@@ -35,7 +38,7 @@ public class HomeController : Controller
                 cookiesList.Add(value);
         }
 
-        if (_cookieService.CanAddValue(word, cookiesList))//can
+        if (_cookieService.CanAddValue(word, cookiesList))
         {
             Response.Cookies.Append(CookieService.ValueKey + count, word, option);
             Response.Cookies.Append(CookieService.CountKey, (count + 1).ToString(), option);
@@ -57,6 +60,15 @@ public class HomeController : Controller
         ViewData["Title"] = "Anagrams";
         var wordsList = _wordService.GetAllWords().ToList();
         return View(PaginatedList<string>.Create(wordsList, pageNumber, PageSize));
+    }
+    
+    //using database
+    public IActionResult SearchWords(string? wordPart)
+    {
+        ViewData["Title"] = "Search";
+        if (string.IsNullOrEmpty(wordPart)) return View(new List<WordModel>());
+        var models = _wordRepoSql.GetAllWordsByWordPart(wordPart);
+        return View(models);
     }
 
     [HttpGet]

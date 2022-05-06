@@ -10,12 +10,12 @@ builder.Services.AddControllersWithViews();
 
 builder.Services
     .AddScoped<IDataAccess<HashSet<string>>, DataAccessHashSet>()
-    .AddScoped<IWordsService, WordsService>()
+    .AddScoped<IWordsServiceOld, WordsServiceOld>()
     .AddScoped<IFileService, FileService>()
     .AddScoped<ICookieService, CookieService>()
     .AddScoped<IAnagramSolverLogic, AnagramSolverLogic>()
-    .AddScoped<IWordRepository>(sp
-        => new WordRepository(sp.GetService<IDataAccess<HashSet<string>>>(), "zodynas.txt"));
+    .AddScoped<IWordRepositoryOld>(sp
+        => new WordRepositoryOld(sp.GetService<IDataAccess<HashSet<string>>>(), "zodynas.txt"));
 
 var app = builder.Build();
 

@@ -1,0 +1,39 @@
+@model List<AnagramSolver.Contracts.Models.WordModel>
+
+@{
+    Layout = "_Layout";
+}
+
+<div>
+    <form method="post" enctype="multipart/form-data" asp-controller="Home" asp-action="SearchWords">
+        Word: <input type="text" id="txtWord" name="wordPart"/>
+        <input type="submit" value="Search"/>
+    </form>
+
+    <p><b>Filtered words: </b></p>
+    @if (Model != null && Model.Count > 0)
+    {
+        <table>
+            <tr>
+                <th>Id</th>
+                <th>FirstForm</th>
+                <th>Form</th>
+                <th>SecondForm</th>
+            </tr>
+            
+            @foreach (var item in Model)
+            {
+                <tr >
+                    <td>@item.WordId</td>
+                    <td>@item.FirstForm</td>
+                    <td>@item.Form</td>
+                    <td>@item.SecondForm</td>
+                </tr>
+            }
+        </table>
+    }
+    else
+    {
+        <p>No anagrams were found</p>
+    }
+</div>

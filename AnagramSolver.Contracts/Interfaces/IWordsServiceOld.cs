@@ -1,6 +1,6 @@
 namespace AnagramSolver.Contracts.Interfaces;
 
-public interface IWordsService
+public interface IWordsServiceOld
 {
     List<string> GetAllWords();
     bool AddWord(string word);

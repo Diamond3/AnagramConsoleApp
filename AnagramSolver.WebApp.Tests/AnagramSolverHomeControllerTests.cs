@@ -16,7 +16,7 @@ public class AnagramSolverHomeControllerTests
     [SetUp]
     public void SetUp()
     {
-        var wordServiceMock = new Mock<IWordsService>();
+        var wordServiceMock = new Mock<IWordsServiceOld>();
         var cookieServiceMock = new Mock<ICookieService>();
         var solver = new AnagramSolverLogic();
         var words = new HashSet<string> { "valia", "vailas", "laiivas", "lavas", "laivas", "balas", "tyras" };

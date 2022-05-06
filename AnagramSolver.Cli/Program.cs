@@ -13,10 +13,10 @@ var services = new ServiceCollection();
 services
     .AddScoped<IDataAccess<HashSet<string>>, DataAccessHashSet>()
     /*.AddScoped<IWordRepository, WordRepository>()*/
-    .AddScoped<IWordsService, WordsService>()
+    .AddScoped<IWordsServiceOld, WordsServiceOld>()
     .AddScoped<IAnagramSolverLogic, AnagramSolverLogic>()
-    .AddScoped<IWordRepository>(sp 
-        => new WordRepository(sp.GetService<IDataAccess<HashSet<string>>>(),"zodynas.txt"))
+    .AddScoped<IWordRepositoryOld>(sp 
+        => new WordRepositoryOld(sp.GetService<IDataAccess<HashSet<string>>>(),"zodynas.txt"))
     .BuildServiceProvider();
 
 

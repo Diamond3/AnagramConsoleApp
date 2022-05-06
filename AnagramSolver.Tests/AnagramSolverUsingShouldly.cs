@@ -16,7 +16,7 @@ public class AnagramSolverUsingShouldly
         //arrange
         var words = new HashSet<string> { "valia", "vailas", "laiivas", "lavas", "laivas", "balas", "tyras" };
 
-        var repo = new Mock<IWordRepository>();
+        var repo = new Mock<IWordRepositoryOld>();
         repo.Setup(x => x.GetWords()).Returns(words.ToList());
         var solver = new AnagramSolverLogic();
 

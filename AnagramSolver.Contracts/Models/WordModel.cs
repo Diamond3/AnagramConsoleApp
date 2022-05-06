@@ -2,8 +2,8 @@ namespace AnagramSolver.Contracts.Models;
 
 public class WordModel
 {
-    private int WordId { get; set; }
-    private string FirstForm { get; set; }
-    private string Form { get; set; }
-    private string SecondForm { get; set; }
+    public int WordId { get; set; }
+    public string FirstForm { get; set; }
+    public string Form { get; set; }
+    public string SecondForm { get; set; }
 }

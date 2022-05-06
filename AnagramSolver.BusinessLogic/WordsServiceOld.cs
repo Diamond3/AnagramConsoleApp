@@ -2,11 +2,11 @@ using AnagramSolver.Contracts.Interfaces;
 
 namespace AnagramSolver.BusinessLogic;
 
-public class WordsService: IWordsService
+public class WordsServiceOld: IWordsServiceOld
 {
-    private readonly IWordRepository _repo;
+    private readonly IWordRepositoryOld _repo;
 
-    public WordsService(IWordRepository repo)
+    public WordsServiceOld(IWordRepositoryOld repo)
     {
         _repo = repo;
     }

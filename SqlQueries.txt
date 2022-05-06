@@ -1,0 +1,15 @@
+CREATE TABLE Word (
+    WordId INT IDENTITY(1,1) PRIMARY KEY,
+    FirstForm varchar(255) NOT NULL,
+    Form varchar(255),
+    SecondForm varchar(255),
+);
+
+INSERT INTO Word (FirstForm, Form, SecondForm)
+VALUES ('zodis', 'daik.', 'zodis');
+
+SELECT WordId, FirstForm, Form, SecondForm FROM Word WHERE SecondForm LIKE '%zod%';
+
+DELETE FROM Word;
+
+DROP TABLE Word;
