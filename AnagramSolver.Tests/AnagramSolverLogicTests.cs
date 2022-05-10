@@ -1,8 +1,5 @@
 using System.Collections.Generic;
-using System.Linq;
 using AnagramSolver.BusinessLogic.Logic;
-using AnagramSolver.Contracts.Interfaces;
-using Moq;
 using NUnit.Framework;
 
 namespace AnagramSolver.Tests;
@@ -16,12 +13,7 @@ public class AnagramSolverLogicTests
     public void SetUp()
     {
         _words = new HashSet<string> { "valia", "vailas", "laiivas", "lavas", "laivas", "balas", "tyras" };
-
-        var repo = new Mock<IWordRepositoryOld>();
-        repo.Setup(x => x.GetWords()).Returns(_words.ToList());
-
         _solver = new AnagramSolverLogic();
-        
     }
 
     [Test]

@@ -1,12 +1,12 @@
-using System.Globalization;
 using AnagramSolver.Contracts.Interfaces;
 
 namespace AnagramSolver.BusinessLogic;
 
-public class CookieService: ICookieService
+public class CookieService : ICookieService
 {
     public const string CountKey = "Count";
     public const string ValueKey = "Value_";
+
     public bool CanAddValue(string? value, List<string> allValues)
     {
         if (string.IsNullOrEmpty(value)) return false;
@@ -20,14 +20,12 @@ public class CookieService: ICookieService
 
     public int GetCount(string? str)
     {
-        if (string.IsNullOrEmpty(str)) return 0;
-        else
+        if (string.IsNullOrEmpty(str))
         {
-            if (int.TryParse(str, out int number))
-            {
-                return number;
-            }
+            return 0;
         }
+
+        if (int.TryParse(str, out var number)) return number;
         return 0;
     }
 }

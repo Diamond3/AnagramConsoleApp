@@ -2,7 +2,7 @@ using AnagramSolver.Contracts.Interfaces;
 
 namespace AnagramSolver.BusinessLogic;
 
-public class WordsServiceOld: IWordsServiceOld
+public class WordsServiceOld : IWordsServiceOld
 {
     private readonly IWordRepositoryOld _repo;
 
@@ -15,9 +15,9 @@ public class WordsServiceOld: IWordsServiceOld
     {
         return _repo.GetWords();
     }
-    
+
     public bool AddWord(string word)
-    { 
+    {
         if (GetAllWords().Contains(word.ToLower())) return false;
         try
         {

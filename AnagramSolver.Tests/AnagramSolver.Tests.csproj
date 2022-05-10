@@ -8,18 +8,18 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <PackageReference Include="Microsoft.Extensions.Configuration.EnvironmentVariables" Version="7.0.0-preview.3.22175.4" />
-        <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.11.0" />
-        <PackageReference Include="Moq" Version="4.17.2" />
-        <PackageReference Include="NUnit" Version="3.13.2" />
-        <PackageReference Include="NUnit3TestAdapter" Version="4.0.0" />
-        <PackageReference Include="coverlet.collector" Version="3.1.0" />
-        <PackageReference Include="Shouldly" Version="4.0.3" />
+        <PackageReference Include="Microsoft.Extensions.Configuration.EnvironmentVariables" Version="7.0.0-preview.3.22175.4"/>
+        <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.11.0"/>
+        <PackageReference Include="Moq" Version="4.17.2"/>
+        <PackageReference Include="NUnit" Version="3.13.2"/>
+        <PackageReference Include="NUnit3TestAdapter" Version="4.0.0"/>
+        <PackageReference Include="coverlet.collector" Version="3.1.0"/>
+        <PackageReference Include="Shouldly" Version="4.0.3"/>
     </ItemGroup>
 
     <ItemGroup>
-        <ProjectReference Include="..\AnagramSolver.BusinessLogic\AnagramSolver.BusinessLogic.csproj" />
-        <ProjectReference Include="..\AnagramSolver.WebApp\AnagramSolver.WebApp.csproj" />
+        <ProjectReference Include="..\AnagramSolver.BusinessLogic\AnagramSolver.BusinessLogic.csproj"/>
+        <ProjectReference Include="..\AnagramSolver.WebApp\AnagramSolver.WebApp.csproj"/>
     </ItemGroup>
 
 </Project>

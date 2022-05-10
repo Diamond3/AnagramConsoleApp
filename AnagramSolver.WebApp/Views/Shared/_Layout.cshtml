@@ -9,14 +9,14 @@
         //@Context.Request.Cookies["Count"]
         if (Context.Request.Cookies["Count"] != null)
         {
-            @if (int.TryParse(Context.Request.Cookies["Count"], out int count))
+            @if (int.TryParse(Context.Request.Cookies["Count"], out var count))
             {
                 @for (var i = 0; i < count; i++)
                 {
                     <span>
-                        @Html.ActionLink(@Context.Request.Cookies["Value_" + i], "Index",
-                                                 "Home", new { word = @Context.Request.Cookies["Value_" + i] },
-                                                 null)
+                        @Html.ActionLink(Context.Request.Cookies["Value_" + i], "Index",
+                            "Home", new { word = Context.Request.Cookies["Value_" + i] },
+                            null)
                     </span>
                 }
             }

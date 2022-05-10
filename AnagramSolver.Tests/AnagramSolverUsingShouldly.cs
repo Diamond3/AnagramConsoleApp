@@ -1,8 +1,5 @@
 using System.Collections.Generic;
-using System.Linq;
 using AnagramSolver.BusinessLogic.Logic;
-using AnagramSolver.Contracts.Interfaces;
-using Moq;
 using NUnit.Framework;
 using Shouldly;
 
@@ -15,9 +12,6 @@ public class AnagramSolverUsingShouldly
     {
         //arrange
         var words = new HashSet<string> { "valia", "vailas", "laiivas", "lavas", "laivas", "balas", "tyras" };
-
-        var repo = new Mock<IWordRepositoryOld>();
-        repo.Setup(x => x.GetWords()).Returns(words.ToList());
         var solver = new AnagramSolverLogic();
 
         var expectedAnagrams = new List<string> { "laivas", "vailas" };

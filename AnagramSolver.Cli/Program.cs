@@ -15,10 +15,9 @@ services
     /*.AddScoped<IWordRepository, WordRepository>()*/
     .AddScoped<IWordsServiceOld, WordsServiceOld>()
     .AddScoped<IAnagramSolverLogic, AnagramSolverLogic>()
-    .AddScoped<IWordRepositoryOld>(sp 
-        => new WordRepositoryOld(sp.GetService<IDataAccess<HashSet<string>>>(),"zodynas.txt"))
+    .AddScoped<IWordRepositoryOld>(sp
+        => new WordRepositoryOld(sp.GetService<IDataAccess<HashSet<string>>>(), "zodynas.txt"))
     .BuildServiceProvider();
-
 
 
 var environment = Environment.GetEnvironmentVariable("NETCORE_ENVIRONMENT");

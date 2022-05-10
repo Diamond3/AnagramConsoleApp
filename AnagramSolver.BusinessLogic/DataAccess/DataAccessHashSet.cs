@@ -24,12 +24,13 @@ public class DataAccessHashSet : IDataAccess<HashSet<string>>
 
         return wordsSet;
     }
+
     public void AddWordToFile(string filePath, string word)
     {
         using var streamWriter = new StreamWriter(filePath, true);
         streamWriter.WriteLine($"{word}{Separator}filler{Separator}{word}{Separator}{1}");
     }
-    
+
     public List<WordModel> ReadFileToList(string filePath)
     {
         var wordsSet = new List<WordModel>();
@@ -40,7 +41,7 @@ public class DataAccessHashSet : IDataAccess<HashSet<string>>
         {
             var words = line.Split(Separator);
 
-            wordsSet.Add(new WordModel()
+            wordsSet.Add(new WordModel
             {
                 FirstForm = words[0],
                 Form = words[1],

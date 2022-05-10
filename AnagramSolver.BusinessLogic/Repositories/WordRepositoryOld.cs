@@ -1,11 +1,11 @@
 using AnagramSolver.Contracts.Interfaces;
-using Microsoft.Extensions.Configuration;
 
 namespace AnagramSolver.BusinessLogic.Repositories;
 
 public class WordRepositoryOld : IWordRepositoryOld
 {
     private readonly IDataAccess<HashSet<string>> _data;
+
     /*private readonly HashSet<string> _words;*/
     private readonly string _filePath;
 

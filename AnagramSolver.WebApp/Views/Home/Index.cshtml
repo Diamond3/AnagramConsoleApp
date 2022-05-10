@@ -10,18 +10,20 @@
         <input type="submit" value="Search"/>
     </form>
 
-    <p><b>Anagrams of word: @Model.Word</b></p>
+    <p>
+        <b>Anagrams of word: @Model.Word</b>
+    </p>
     @if (Model.Anagrams.Count > 0)
     {
         <ul>
-        @foreach (var item in Model.Anagrams)
-        {
-            <li>@item</li>
-        }
+            @foreach (var item in Model.Anagrams)
+            {
+                <li>@item.SecondForm</li>
+            }
         </ul>
     }
     else
     {
-        <p>No anagrams were found</p>
+        <p>No anagrams</p>
     }
 </div>

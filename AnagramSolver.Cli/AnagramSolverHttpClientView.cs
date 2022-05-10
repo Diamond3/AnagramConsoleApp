@@ -1,16 +1,11 @@
 using System.Text;
-using AnagramSolver.Contracts.Interfaces;
 using Newtonsoft.Json;
 
 namespace AnagramSolver.Cli;
 
 public class AnagramSolverHttpClientView
 {
-    static readonly HttpClient client = new HttpClient();
-
-    public AnagramSolverHttpClientView()
-    {
-    }
+    private static readonly HttpClient client = new();
 
     public void LoadView(string? env, string? message)
     {
@@ -70,6 +65,7 @@ public class AnagramSolverHttpClientView
             }
         }
     }
+
     private static async Task<List<string>> GetAnagramsRequest(string uri)
     {
         var responseBody = await client.GetStringAsync(uri);

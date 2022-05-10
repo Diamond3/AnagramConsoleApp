@@ -5,8 +5,8 @@ namespace AnagramSolver.Cli;
 
 public class AnagramSolverView
 {
-    private readonly IWordsServiceOld _service;
     private readonly IAnagramSolverLogic _anagramSolver;
+    private readonly IWordsServiceOld _service;
 
     public AnagramSolverView(IWordsServiceOld service, IAnagramSolverLogic anagramSolver)
     {

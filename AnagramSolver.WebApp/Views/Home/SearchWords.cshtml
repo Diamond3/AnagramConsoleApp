@@ -10,7 +10,9 @@
         <input type="submit" value="Search"/>
     </form>
 
-    <p><b>Filtered words: </b></p>
+    <p>
+        <b>Filtered words: </b>
+    </p>
     @if (Model != null && Model.Count > 0)
     {
         <table>
@@ -20,7 +22,7 @@
                 <th>Form</th>
                 <th>SecondForm</th>
             </tr>
-            
+
             @foreach (var item in Model)
             {
                 <tr >
@@ -34,6 +36,6 @@
     }
     else
     {
-        <p>No anagrams were found</p>
+        <p>No anagrams</p>
     }
 </div>

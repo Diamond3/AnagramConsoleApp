@@ -4,10 +4,6 @@ namespace AnagramSolver.BusinessLogic.Logic;
 
 public class AnagramSolverLogic : IAnagramSolverLogic
 {
-    public AnagramSolverLogic()
-    {
-        
-    }
     public List<string> Solve(string input, IEnumerable<string> words)
     {
         var anagrams = new List<string>();
