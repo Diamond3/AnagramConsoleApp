@@ -4,13 +4,14 @@ using AnagramSolver.BusinessLogic.Logic;
 using AnagramSolver.BusinessLogic.Repositories;
 using AnagramSolver.BusinessLogic.Services;
 using AnagramSolver.Contracts.Interfaces;
+using AnagramSolver.Contracts.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllersWithViews();
 
 builder.Services
     .AddScoped<IDataAccess<HashSet<string>>, DataAccessHashSet>()
-    .AddScoped<IWordService, WordService>()
+    .AddScoped<IWordService<Word>, WordService>()
     .AddScoped<IWordRepository, WordRepository>()
     .AddScoped<IFileService, FileService>()
     .AddScoped<ICookieService, CookieService>()

@@ -2,15 +2,12 @@ using AnagramSolver.Contracts.Models;
 
 namespace AnagramSolver.Contracts.Interfaces;
 
-public interface IWordService
+public interface IWordService<T>
 {
-    List<WordModel> GetAllWords();
-
-    //bool AddWord(string word);
-    List<WordModel> GetAnagramsFromCachedWord(string? word);
-    List<WordModel> GetAnagrams(string? word);
-    List<WordModel> GetWordsByWordPart(string? wordPart);
-    void InsertAnagramsCachedWord(string? word, List<WordModel> models);
-    void InsertAllWordModels(List<WordModel> models);
+    List<T> GetAllWords();
+    List<T> GetAnagrams(string? word);
+    List<T> GetWordsByWordPart(string? wordPart);
+    void InsertAnagramsCachedWord(string? word, List<T> wordList);
+    void InsertAllWordModels(List<T> models);
     void ClearCachedWord();
 }

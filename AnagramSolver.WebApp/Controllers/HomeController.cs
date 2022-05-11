@@ -11,9 +11,9 @@ public class HomeController : Controller
 {
     private const int PageSize = 34;
     private readonly ICookieService _cookieService;
-    private readonly IWordService _wordService;
+    private readonly IWordService<Word> _wordService;
 
-    public HomeController(IWordService service, ICookieService cookieService)
+    public HomeController(IWordService<Word> service, ICookieService cookieService)
     {
         _wordService = service;
         _cookieService = cookieService;
@@ -54,13 +54,13 @@ public class HomeController : Controller
     {
         ViewData["Title"] = "Anagrams";
         var wordsList = _wordService.GetAllWords();
-        return View(PaginatedList<WordModel>.Create(wordsList, pageNumber, PageSize));
+        return View(PaginatedList<Word>.Create(wordsList, pageNumber, PageSize));
     }
 
     public IActionResult SearchWords(string? wordPart)
     {
         ViewData["Title"] = "Search";
-        if (string.IsNullOrEmpty(wordPart)) return View(new List<WordModel>());
+        if (string.IsNullOrEmpty(wordPart)) return View(new List<Word>());
         var models = _wordService.GetWordsByWordPart(wordPart);
         return View(models);
     }

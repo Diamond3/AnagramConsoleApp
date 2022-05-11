@@ -31,9 +31,9 @@ public class DataAccessHashSet : IDataAccess<HashSet<string>>
         streamWriter.WriteLine($"{word}{Separator}filler{Separator}{word}{Separator}{1}");
     }
 
-    public List<WordModel> ReadFileToList(string filePath)
+    public List<Word> ReadFileToList(string filePath)
     {
-        var wordsSet = new List<WordModel>();
+        var wordsSet = new List<Word>();
         string line;
 
         using var streamReader = new StreamReader(filePath, Encoding.UTF8);
@@ -41,7 +41,7 @@ public class DataAccessHashSet : IDataAccess<HashSet<string>>
         {
             var words = line.Split(Separator);
 
-            wordsSet.Add(new WordModel
+            wordsSet.Add(new Word
             {
                 FirstForm = words[0],
                 Form = words[1],

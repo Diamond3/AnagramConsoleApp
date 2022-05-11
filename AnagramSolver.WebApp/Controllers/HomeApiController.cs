@@ -11,9 +11,9 @@ namespace AnagramSolver.WebApp.Controllers;
 public class HomeApiController : ControllerBase
 {
     private readonly IFileService _fileService;
-    private readonly IWordService _wordService;
+    private readonly IWordService<Word> _wordService;
 
-    public HomeApiController(IWordService service, IFileService fileService)
+    public HomeApiController(IWordService<Word> service, IFileService fileService)
     {
         _wordService = service;
         _fileService = fileService;
@@ -37,14 +37,14 @@ public class HomeApiController : ControllerBase
 
     // api/homeapi
     [HttpGet]
-    public IEnumerable<WordModel> Get()
+    public IEnumerable<Word> Get()
     {
         return _wordService.GetAllWords().Take(50);
     }
 
     // api/homeapi/word
     [HttpGet("{word}")]
-    public IEnumerable<WordModel> GetAnagrams(string word)
+    public IEnumerable<Word> GetAnagrams(string word)
     {
         try
         {
@@ -52,7 +52,7 @@ public class HomeApiController : ControllerBase
         }
         catch (Exception)
         {
-            return new List<WordModel>();
+            return new List<Word>();
         }
     }
 

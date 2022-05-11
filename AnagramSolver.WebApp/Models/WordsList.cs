@@ -4,6 +4,6 @@ namespace AnagramSolver.WebApp.Models;
 
 public class WordList
 {
-    public List<WordModel> Anagrams = new();
+    public List<Word> Anagrams = new();
     public string Word { get; set; }
 }

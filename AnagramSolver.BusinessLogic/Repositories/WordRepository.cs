@@ -12,9 +12,9 @@ public class WordRepository : IWordRepository
     private const string Connection =
         "data source=LT-LIT-SC-0597;initial catalog=AnagramDB;trusted_connection=true;TrustServerCertificate=true;MultipleActiveResultSets=True";
 
-    public List<WordModel> GetWords()
+    public List<Word> GetWords()
     {
-        var wordModelList = new List<WordModel>();
+        var wordModelList = new List<Word>();
 
         using var connection = new SqlConnection(Connection);
         connection.Open();
@@ -25,7 +25,7 @@ public class WordRepository : IWordRepository
         var reader = command.ExecuteReader();
         while (reader.Read())
         {
-            var newWordModel = new WordModel
+            var newWordModel = new Word
             {
                 WordId = (int)reader["WordId"],
                 FirstForm = (string)reader["FirstForm"],
@@ -43,9 +43,9 @@ public class WordRepository : IWordRepository
         throw new NotImplementedException();
     }
 
-    public List<WordModel> GetAnagramsFromCachedWord(string? word)
+    public List<Word> GetAnagramsFromCachedWord(string? word)
     {
-        var wordModelList = new List<WordModel>();
+        var wordModelList = new List<Word>();
         if (string.IsNullOrEmpty(word)) return wordModelList;
 
         using var connection = new SqlConnection(Connection);
@@ -59,7 +59,7 @@ public class WordRepository : IWordRepository
         var reader = command.ExecuteReader();
         while (reader.Read())
         {
-            var newWordModel = new WordModel
+            var newWordModel = new Word
             {
                 FirstForm = word,
                 SecondForm = (string)reader["Anagram"]
@@ -70,12 +70,12 @@ public class WordRepository : IWordRepository
         return wordModelList;
     }
 
-    public List<WordModel> GetAllWordsBySortedForm(string? sortedWord, string originalWord)
+    public List<Word> GetAllWordsBySortedForm(string? sortedWord, string originalWord)
     {
-        if (string.IsNullOrEmpty(sortedWord)) return new List<WordModel>();
+        if (string.IsNullOrEmpty(sortedWord)) return new List<Word>();
 
 
-        var wordModelList = new List<WordModel>();
+        var wordModelList = new List<Word>();
 
         using var connection = new SqlConnection(Connection);
         connection.Open();
@@ -89,7 +89,7 @@ public class WordRepository : IWordRepository
         var reader = command.ExecuteReader();
         while (reader.Read())
         {
-            var newWordModel = new WordModel
+            var newWordModel = new Word
             {
                 SecondForm = (string)reader["SecondForm"]
             };
@@ -99,9 +99,9 @@ public class WordRepository : IWordRepository
         return wordModelList;
     }
 
-    public List<WordModel> GetAllWordsByWordPart(string? wordPart)
+    public List<Word> GetAllWordsByWordPart(string? wordPart)
     {
-        var wordModelList = new List<WordModel>();
+        var wordModelList = new List<Word>();
 
         using var connection = new SqlConnection(Connection);
         connection.Open();
@@ -113,7 +113,7 @@ public class WordRepository : IWordRepository
         var reader = command.ExecuteReader();
         while (reader.Read())
         {
-            var newWordModel = new WordModel
+            var newWordModel = new Word
             {
                 WordId = (int)reader["WordId"],
                 FirstForm = (string)reader["FirstForm"],
@@ -126,7 +126,7 @@ public class WordRepository : IWordRepository
         return wordModelList;
     }
 
-    public void AddAllWordModels(List<WordModel> models)
+    public void AddAllWordModels(List<Word> models)
     {
         using var connection = new SqlConnection(Connection);
         connection.Open();
@@ -154,7 +154,7 @@ public class WordRepository : IWordRepository
         }
     }
 
-    public void InsertAnagramsCachedWord(string? word, List<WordModel> models)
+    public void InsertAnagramsCachedWord(string? word, List<Word> models)
     {
         using var connection = new SqlConnection(Connection);
         connection.Open();
@@ -163,7 +163,7 @@ public class WordRepository : IWordRepository
                     "VALUES (@Word, @Anagram)";
 
         if (models.Count == 0)
-            models.Add(new WordModel
+            models.Add(new Word
             {
                 SecondForm = "No anagrams"
             });

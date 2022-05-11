@@ -4,12 +4,12 @@ namespace AnagramSolver.Contracts.Interfaces;
 
 public interface IWordRepository
 {
-    List<WordModel> GetWords();
+    List<Word> GetWords();
     void AddWord(string word);
-    List<WordModel> GetAnagramsFromCachedWord(string? word);
-    List<WordModel> GetAllWordsBySortedForm(string? sortedWord, string originalWord);
-    List<WordModel> GetAllWordsByWordPart(string? wordPart);
-    void AddAllWordModels(List<WordModel> models);
-    void InsertAnagramsCachedWord(string? word, List<WordModel> models);
+    List<Word> GetAnagramsFromCachedWord(string? word);
+    List<Word> GetAllWordsBySortedForm(string? sortedWord, string originalWord);
+    List<Word> GetAllWordsByWordPart(string? wordPart);
+    void AddAllWordModels(List<Word> models);
+    void InsertAnagramsCachedWord(string? word, List<Word> models);
     void ClearCachedWord();
 }

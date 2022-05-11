@@ -3,7 +3,7 @@ using AnagramSolver.Contracts.Models;
 
 namespace AnagramSolver.BusinessLogic.Services;
 
-public class WordService : IWordService
+public class WordService : IWordService<Word>
 {
     private readonly IWordRepository _wordRepository;
 
@@ -12,20 +12,20 @@ public class WordService : IWordService
         _wordRepository = wordRepository;
     }
 
-    public List<WordModel> GetAllWords()
+    public List<Word> GetAllWords()
     {
         return _wordRepository.GetWords();
     }
 
-    public List<WordModel> GetAnagramsFromCachedWord(string? word)
+    public List<Word> GetAnagramsFromCachedWord(string? word)
     {
-        if (string.IsNullOrEmpty(word)) return new List<WordModel>();
+        if (string.IsNullOrEmpty(word)) return new List<Word>();
         return _wordRepository.GetAnagramsFromCachedWord(word);
     }
 
-    public List<WordModel> GetAnagrams(string? word)
+    public List<Word> GetAnagrams(string? word)
     {
-        if (string.IsNullOrEmpty(word)) return new List<WordModel>();
+        if (string.IsNullOrEmpty(word)) return new List<Word>();
 
         var anagrams = GetAnagramsFromCachedWord(word);
 
@@ -41,19 +41,19 @@ public class WordService : IWordService
         return anagrams;
     }
 
-    public List<WordModel> GetWordsByWordPart(string? wordPart)
+    public List<Word> GetWordsByWordPart(string? wordPart)
     {
-        if (string.IsNullOrEmpty(wordPart)) return new List<WordModel>();
+        if (string.IsNullOrEmpty(wordPart)) return new List<Word>();
         return _wordRepository.GetAllWordsByWordPart(wordPart);
     }
 
-    public void InsertAnagramsCachedWord(string? word, List<WordModel> models)
+    public void InsertAnagramsCachedWord(string? word, List<Word> wordList)
     {
         if (string.IsNullOrEmpty(word)) return;
-        _wordRepository.InsertAnagramsCachedWord(word, models);
+        _wordRepository.InsertAnagramsCachedWord(word, wordList);
     }
 
-    public void InsertAllWordModels(List<WordModel> models)
+    public void InsertAllWordModels(List<Word> models)
     {
         _wordRepository.AddAllWordModels(models);
     }
