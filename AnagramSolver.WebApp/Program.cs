@@ -4,7 +4,6 @@ using AnagramSolver.BusinessLogic.Services;
 using AnagramSolver.Contracts.Interfaces;
 using AnagramSolver.EF.DatabaseFirst;
 using AnagramSolver.EF.DatabaseFirst.Models;
-using IWordRepository = AnagramSolver.EF.DatabaseFirst.Interfaces.IWordRepository;
 using Word = AnagramSolver.Contracts.Models.Word;
 //using AnagramSolver.EF.DatabaseFirst.Interfaces;
 
@@ -13,13 +12,10 @@ builder.Services.AddControllersWithViews();
 
 builder.Services
     .AddScoped<IDataAccess<HashSet<string>>, DataAccessHashSet>()
-    .AddScoped<IWordService<Word>, WordServiceDbFirst>()
-    .AddScoped<AnagramSolver.Contracts.Interfaces.IWordRepository,
-        AnagramSolver.BusinessLogic.Repositories.WordRepository>()
+    .AddScoped<IWordService<Word>, WordService>()
+    .AddScoped<IWordRepository, WordRepository>()
     .AddScoped<IFileService, FileService>()
     .AddScoped<ICookieService, CookieService>()
-    .AddScoped<IWordRepository,
-        WordRepository>()
     .AddDbContext<AnagramDBContext>();
 
 var app = builder.Build();
