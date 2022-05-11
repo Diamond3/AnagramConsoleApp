@@ -17,12 +17,6 @@ public class WordService : IWordService<Word>
         return _wordRepository.GetWords();
     }
 
-    public List<Word> GetAnagramsFromCachedWord(string? word)
-    {
-        if (string.IsNullOrEmpty(word)) return new List<Word>();
-        return _wordRepository.GetAnagramsFromCachedWord(word);
-    }
-
     public List<Word> GetAnagrams(string? word)
     {
         if (string.IsNullOrEmpty(word)) return new List<Word>();
@@ -61,5 +55,11 @@ public class WordService : IWordService<Word>
     public void ClearCachedWord()
     {
         _wordRepository.ClearCachedWord();
+    }
+
+    public List<Word> GetAnagramsFromCachedWord(string? word)
+    {
+        if (string.IsNullOrEmpty(word)) return new List<Word>();
+        return _wordRepository.GetAnagramsFromCachedWord(word);
     }
 }

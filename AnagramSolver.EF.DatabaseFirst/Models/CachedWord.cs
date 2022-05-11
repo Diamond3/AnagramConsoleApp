@@ -1,4 +1,4 @@
-﻿namespace AnagramSolver.Contracts.Models;
+﻿namespace AnagramSolver.EF.DatabaseFirst.Models;
 
 public class CachedWord
 {

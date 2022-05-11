@@ -20,10 +20,7 @@ public class CookieService : ICookieService
 
     public int GetCount(string? str)
     {
-        if (string.IsNullOrEmpty(str))
-        {
-            return 0;
-        }
+        if (string.IsNullOrEmpty(str)) return 0;
 
         if (int.TryParse(str, out var number)) return number;
         return 0;

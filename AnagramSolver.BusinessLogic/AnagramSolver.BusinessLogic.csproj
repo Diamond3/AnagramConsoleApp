@@ -8,11 +8,11 @@
 
     <ItemGroup>
         <ProjectReference Include="..\AnagramSolver.Contracts\AnagramSolver.Contracts.csproj"/>
+        <ProjectReference Include="..\AnagramSolver.EF.DatabaseFirst\AnagramSolver.EF.DatabaseFirst.csproj"/>
     </ItemGroup>
 
     <ItemGroup>
-        <PackageReference Include="Microsoft.Data.SqlClient" Version="4.1.0"/>
-        <PackageReference Include="Microsoft.Extensions.Configuration.Abstractions" Version="7.0.0-preview.3.22175.4"/>
+        <PackageReference Include="Microsoft.Extensions.Configuration.Abstractions" Version="7.0.0-preview.4.22229.4"/>
     </ItemGroup>
 
 </Project>

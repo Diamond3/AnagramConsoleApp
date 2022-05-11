@@ -1,25 +1,27 @@
-using AnagramSolver.Contracts.Interfaces;
-using AnagramSolver.Contracts.Models;
+using AnagramSolver.EF.DatabaseFirst.Interfaces;
 using AnagramSolver.EF.DatabaseFirst.Models;
 
 namespace AnagramSolver.EF.DatabaseFirst.Services;
 
-public class WordService: IWordService<Word>
+public class WordService
 {
-    private readonly AnagramDBContext _anagramDbContext;
-    public WordService(AnagramDBContext anagramDbContext)
+    private readonly IWordRepository _wordRepository;
+
+    public WordService(IWordRepository wordRepository)
     {
-        _anagramDbContext = anagramDbContext;
+        _wordRepository = wordRepository;
     }
+
     public List<Word> GetAllWords()
     {
-        return _anagramDbContext.Words.ToList();
+        return _wordRepository.GetWords();
     }
 
     public List<CachedWord> GetAnagramsFromCachedWord(string? word)
     {
         if (string.IsNullOrEmpty(word)) return new List<CachedWord>();
-        return _anagramDbContext.CachedWords.Where(w => w.Word == word).ToList();
+        var cachedWords = _wordRepository.GetCachedWords();
+        return cachedWords.Where(w => w.Word == word).ToList();
     }
 
     public List<Word> GetAnagrams(string? word)
@@ -30,7 +32,7 @@ public class WordService: IWordService<Word>
 
         if (anagrams.Count > 0)
         {
-            wordList.AddRange(anagrams.Select(a => new Word() { FirstForm = word, SecondForm = a.Anagram }));
+            wordList.AddRange(anagrams.Select(a => new Word { FirstForm = word, SecondForm = a.Anagram }));
             return wordList;
         }
 
@@ -38,10 +40,11 @@ public class WordService: IWordService<Word>
         Array.Sort(wordChars);
         var sortedWord = new string(wordChars);
 
-        wordList = _anagramDbContext.Words.Where(w => w.SortedForm.ToLower() == sortedWord
-                    && !string.Equals(w.SecondForm, word, StringComparison.CurrentCultureIgnoreCase)).ToList();
+        wordList = _wordRepository.GetWords().Where(w => w.SortedForm.ToLower() == sortedWord
+                                                         && !string.Equals(w.SecondForm, word,
+                                                             StringComparison.CurrentCultureIgnoreCase)).ToList();
 
-        if (wordList.Count == 0)
+        /*if (wordList.Count == 0)
         {
             wordList.Add(new Word()
             {
@@ -49,32 +52,7 @@ public class WordService: IWordService<Word>
                 SecondForm = "No Anagrams"
             });
         }
-        InsertAnagramsCachedWord(word, wordList);
+        InsertAnagramsCachedWord(word, wordList);*/
         return wordList;
-    }
-
-    public List<Word> GetWordsByWordPart(string? wordPart)
-    {
-        throw new NotImplementedException();
-    }
-
-    public void InsertAnagramsCachedWord(string? word, List<Word> wordList)
-    {
-        var cachedWords = new List<CachedWord>();
-        cachedWords.AddRange(wordList.Select(w => new CachedWord() { Word = word, Anagram = w.SecondForm }));
-        _anagramDbContext.CachedWords.AddRange(cachedWords);
-        _anagramDbContext.SaveChanges();
-    }
-
-    public void InsertAllWordModels(List<Word> models)
-    {
-        _anagramDbContext.Words.AddRange(models);
-        _anagramDbContext.SaveChanges();
-    }
-
-    public void ClearCachedWord()
-    {
-        _anagramDbContext.CachedWords.RemoveRange(_anagramDbContext.CachedWords);
-        _anagramDbContext.SaveChanges();
     }
 }

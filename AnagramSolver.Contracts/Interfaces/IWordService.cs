@@ -1,5 +1,3 @@
-using AnagramSolver.Contracts.Models;
-
 namespace AnagramSolver.Contracts.Interfaces;
 
 public interface IWordService<T>
