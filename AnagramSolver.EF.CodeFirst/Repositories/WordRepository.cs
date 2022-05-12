@@ -1,7 +1,7 @@
 using AnagramSolver.Contracts.Interfaces;
-using AnagramSolver.EF.DatabaseFirst.Models;
+using AnagramSolver.EF.CodeFirst.Models;
 
-namespace AnagramSolver.EF.DatabaseFirst;
+namespace AnagramSolver.EF.CodeFirst.Repositories;
 
 public class WordRepository : IWordRepository
 {
@@ -29,7 +29,7 @@ public class WordRepository : IWordRepository
                                                               && !string.Equals(w.SecondForm, originalWord, StringComparison.CurrentCultureIgnoreCase))
             .Select(word => new Contracts.Models.Word()
                 {
-                    WordId = word.WordId,
+                    WordId = word.Id,
                     FirstForm = word.FirstForm,
                     SecondForm = word.SecondForm,
                     SortedForm = word.SortedForm
@@ -60,7 +60,7 @@ public class WordRepository : IWordRepository
     {
         return _anagramDbContext.Words.Select(word => new Contracts.Models.Word()
         {
-            WordId = word.WordId,
+            WordId = word.Id,
             FirstForm = word.FirstForm,
             SecondForm = word.SecondForm,
         }).ToList();

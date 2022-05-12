@@ -3,8 +3,9 @@ using AnagramSolver.BusinessLogic.DataAccess;
 using AnagramSolver.BusinessLogic.Services;
 using AnagramSolver.Contracts.Interfaces;
 using AnagramSolver.EF.DatabaseFirst;
-using AnagramSolver.EF.DatabaseFirst.Models;
 using Word = AnagramSolver.Contracts.Models.Word;
+using WordRepository = AnagramSolver.EF.CodeFirst.Repositories.WordRepository;
+using AnagramDBContext = AnagramSolver.EF.CodeFirst.Models.AnagramDBContext;
 //using AnagramSolver.EF.DatabaseFirst.Interfaces;
 
 var builder = WebApplication.CreateBuilder(args);
