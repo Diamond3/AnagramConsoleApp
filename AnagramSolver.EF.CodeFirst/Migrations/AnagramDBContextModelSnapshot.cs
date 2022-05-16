@@ -11,7 +11,7 @@ using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace AnagramSolver.EF.CodeFirst.Migrations
 {
-    [DbContext(typeof(AnagramDBContext))]
+    [DbContext(typeof(AnagramDbContext))]
     partial class AnagramDBContextModelSnapshot : ModelSnapshot
     {
         protected override void BuildModel(ModelBuilder modelBuilder)

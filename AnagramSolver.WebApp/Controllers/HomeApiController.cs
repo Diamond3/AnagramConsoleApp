@@ -56,15 +56,6 @@ public class HomeApiController : ControllerBase
         }
     }
 
-    // api/homeapi/word
-    /*[HttpPut("{word}")]
-    public async Task<ActionResult> InsertWord(string word)
-    {
-        if (string.IsNullOrEmpty(word))
-            return BadRequest("Empty word!");
-        return _wordService.AddWord(word) ? Ok() : BadRequest("Error!");
-    }*/
-
     // api/homeapi/files/zodynas
     [HttpGet("files/{name}")]
     public async Task<ActionResult> DownloadFile(string name)

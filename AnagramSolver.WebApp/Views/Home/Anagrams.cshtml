@@ -4,25 +4,49 @@
     Layout = "_Layout";
 }
 <div>
+    
+    <p>@Html.ValidationMessage("Error")</p>
+    
     <p>
         <b>List of Anagrams</b>
     </p>
 
     @if (Model.Count > 0)
     {
-        <ul>
+        <table>
+            <tr>
+                <th>FirstForm</th>
+                <th>SecondForm</th>
+                <th>Update</th>
+                <th>Delete</th>
+            </tr>
             @foreach (var item in Model)
             {
-                <li>
-                    @Html.ActionLink(item.FirstForm, "Index",
-                        "Home", new { word = item.FirstForm },
-                        null)
-                    @Html.ActionLink(item.SecondForm, "Index",
-                        "Home", new { word = item.SecondForm },
-                        null)
-                </li>
+                <tr>
+                    <td>
+                        @Html.ActionLink(item.FirstForm, "Index",
+                            "Home", new { word = item.FirstForm },
+                            null)
+                    </td>
+                    <td>
+                        @Html.ActionLink(item.SecondForm, "Index",
+                            "Home", new { word = item.SecondForm },
+                            null)
+                    </td>
+
+                    <td>
+                        @Html.ActionLink("Update", "UpdateWord",
+                            "Home", new { id = item.WordId, word = item.SecondForm, page = Model.PageIndex },
+                            null)
+                    </td>
+                    <td>
+                        @Html.ActionLink("Delete", "DeleteWord",
+                            "Home", new { id = item.WordId, page = Model.PageIndex },
+                            null)
+                    </td>
+                </tr>
             }
-        </ul>
+        </table>
     }
     else
     {

@@ -17,6 +17,16 @@ public class WordRepository : IWordRepository
         return;
     }
 
+    public void UpdateWord(int id, string word)
+    {
+        return;
+    }
+
+    public void DeleteWord(int id)
+    {
+        return;
+    }
+
     public List<Contracts.Models.Word> GetAnagramsFromCachedWord(string? word)
     {
 

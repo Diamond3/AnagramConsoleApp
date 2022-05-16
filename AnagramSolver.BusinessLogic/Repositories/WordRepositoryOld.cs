@@ -6,7 +6,6 @@ public class WordRepositoryOld : IWordRepositoryOld
 {
     private readonly IDataAccess<HashSet<string>> _data;
 
-    /*private readonly HashSet<string> _words;*/
     private readonly string _filePath;
 
     public WordRepositoryOld(IDataAccess<HashSet<string>> data, string filePath)

@@ -6,6 +6,8 @@ public interface IWordRepository
 {
     List<Word> GetWords();
     void AddWord(string word);
+    void UpdateWord(int id, string word);
+    void DeleteWord(int id);
     List<Word> GetAnagramsFromCachedWord(string? word);
     List<Word> GetAllWordsBySortedForm(string? sortedWord, string originalWord);
     List<Word> GetAllWordsByWordPart(string? wordPart);

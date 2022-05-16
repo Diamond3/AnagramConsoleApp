@@ -40,7 +40,17 @@ public class WordRepository : IWordRepository
 
     public void AddWord(string word)
     {
-        throw new NotImplementedException();
+        return;
+    }
+
+    public void UpdateWord(int id, string word)
+    {
+        return;
+    }
+
+    public void DeleteWord(int id)
+    {
+        return;
     }
 
     public List<Word> GetAnagramsFromCachedWord(string? word)

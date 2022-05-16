@@ -1,6 +1,6 @@
 using AnagramSolver.Contracts.Interfaces;
 
-namespace AnagramSolver.BusinessLogic;
+namespace AnagramSolver.BusinessLogic.Services;
 
 public class WordsServiceOld : IWordsServiceOld
 {

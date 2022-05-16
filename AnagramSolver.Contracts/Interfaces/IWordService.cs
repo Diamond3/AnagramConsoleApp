@@ -8,4 +8,7 @@ public interface IWordService<T>
     void InsertAnagramsCachedWord(string? word, List<T> wordList);
     void InsertAllWordModels(List<T> models);
     void ClearCachedWord();
+    bool AddWord(string word);
+    void UpdateWord(int id, string word);
+    void DeleteWord(int id);
 }

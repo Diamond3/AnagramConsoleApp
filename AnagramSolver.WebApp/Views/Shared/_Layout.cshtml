@@ -6,7 +6,29 @@
 <body>
 <div>
     @{
-        //@Context.Request.Cookies["Count"]
+        <span>
+            @Html.ActionLink("Home", "Anagrams",
+                "Home")
+        </span>
+        <span>
+            @Html.ActionLink("Find Anagrams", "Index",
+                "Home")}
+        </span>
+        <span>
+            @Html.ActionLink("Search Words", "SearchWords",
+                "Home")}
+        </span>
+        <span>
+            @Html.ActionLink("Find Anagrams Stats", "SearchWordsInfo",
+                "Home")}
+        </span>
+        <span>
+            @Html.ActionLink("Add Word", "AddWord",
+                "Home")}
+        </span>
+        <br/>
+        <br/>
+        <span>Recent searches</span>
         if (Context.Request.Cookies["Count"] != null)
         {
             @if (int.TryParse(Context.Request.Cookies["Count"], out var count))
@@ -21,6 +43,7 @@
                 }
             }
         }
+        <br/>
     }
 </div>
 

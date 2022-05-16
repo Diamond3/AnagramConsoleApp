@@ -49,12 +49,41 @@ public class WordService : IWordService<Word>
 
     public void InsertAllWordModels(List<Word> models)
     {
+        foreach (var m in models)
+        {
+            var wordBytes = m.SecondForm?.ToArray();
+            Array.Sort(wordBytes);
+            m.SortedForm = new string(wordBytes);
+        }
         _wordRepository.AddAllWordModels(models);
     }
 
     public void ClearCachedWord()
     {
         _wordRepository.ClearCachedWord();
+    }
+
+    public bool AddWord(string word)
+    {
+        if (string.IsNullOrEmpty(word)) return false;
+        var exists = _wordRepository.GetWords()
+            .Exists(w => w.FirstForm.ToLower() == word.ToLower()
+                         || w.FirstForm.ToLower() == word.ToLower());
+        
+        if (exists) return false;
+        _wordRepository.AddWord(word);
+        return true;
+    }
+
+    public void UpdateWord(int id, string word)
+    {
+        if (string.IsNullOrEmpty(word)) return;
+        _wordRepository.UpdateWord(id, word);
+    }
+
+    public void DeleteWord(int id)
+    {
+        _wordRepository.DeleteWord(id);
     }
 
     public List<Word> GetAnagramsFromCachedWord(string? word)

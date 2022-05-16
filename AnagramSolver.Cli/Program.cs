@@ -2,6 +2,7 @@
 using AnagramSolver.BusinessLogic.DataAccess;
 using AnagramSolver.BusinessLogic.Logic;
 using AnagramSolver.BusinessLogic.Repositories;
+using AnagramSolver.BusinessLogic.Services;
 using AnagramSolver.Cli;
 using AnagramSolver.Contracts.Interfaces;
 using Microsoft.Extensions.Configuration;

@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace AnagramSolver.EF.CodeFirst.Migrations
 {
-    [DbContext(typeof(AnagramDBContext))]
+    [DbContext(typeof(AnagramDbContext))]
     [Migration("20220512110734_migration1")]
     partial class migration1
     {

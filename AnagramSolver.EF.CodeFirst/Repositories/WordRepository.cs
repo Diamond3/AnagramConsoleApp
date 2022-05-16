@@ -5,21 +5,54 @@ namespace AnagramSolver.EF.CodeFirst.Repositories;
 
 public class WordRepository : IWordRepository
 {
-    private readonly AnagramDBContext _anagramDbContext;
+    private readonly AnagramDbContext _anagramDbContext;
 
-    public WordRepository(AnagramDBContext anagramDbContext)
+    public WordRepository(AnagramDbContext anagramDbContext)
     {
         _anagramDbContext = anagramDbContext;
     }
 
     public void AddWord(string word)
     {
-        return;
+        var wordBytes = word.ToLower().ToArray();
+        Array.Sort(wordBytes);
+        _anagramDbContext.Add(new WordEntity()
+        {
+            FirstForm = word,
+            SecondForm = word,
+            SortedForm = new string(wordBytes)
+        });
+        _anagramDbContext.SaveChanges();
+    }
+
+    public void UpdateWord(int id, string word)
+    {
+        var wordEntity = _anagramDbContext.Words.FirstOrDefault(w => w.Id == id);
+        if (wordEntity != null)
+        {
+            wordEntity.FirstForm = word;
+            wordEntity.SecondForm = word;
+            
+            var wordBytes = word.ToLower().ToArray();
+            Array.Sort(wordBytes);
+            wordEntity.SortedForm = new string(wordBytes);
+        }
+
+        _anagramDbContext.SaveChanges();
+    }
+
+    public void DeleteWord(int id)
+    {
+        var wordEntity = _anagramDbContext.Words.FirstOrDefault(w => w.Id == id);
+        if (wordEntity != null)
+        {
+            _anagramDbContext.Remove(wordEntity);
+        }
+        _anagramDbContext.SaveChanges();
     }
 
     public List<Contracts.Models.Word> GetAnagramsFromCachedWord(string? word)
     {
-
         return new List<Contracts.Models.Word>();
     }
 
@@ -38,12 +71,20 @@ public class WordRepository : IWordRepository
 
     public List<Contracts.Models.Word> GetAllWordsByWordPart(string? wordPart)
     {
-        throw new NotImplementedException();
+        return new List<Contracts.Models.Word>();
     }
 
     public void AddAllWordModels(List<Contracts.Models.Word> models)
     {
-        return;
+        var wordEntities = models.Select(word => new WordEntity()
+        {
+            Id = word.WordId,
+            FirstForm = word.FirstForm,
+            SecondForm = word.SecondForm,
+            SortedForm = word.SortedForm
+        }).AsEnumerable();
+        _anagramDbContext.Words.AddRange(wordEntities);
+        _anagramDbContext.SaveChanges();
     }
 
     public void InsertAnagramsCachedWord(string? word, List<Contracts.Models.Word> models)
