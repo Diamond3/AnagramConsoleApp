@@ -11,8 +11,10 @@
     </form>
     <p>@Html.ValidationMessage("Error")</p>
 
-    <p> <b>Anagrams of word: @Model.Word</b> </p>
-    
+    <p>
+        <b>Anagrams of word: @Model.Word</b>
+    </p>
+
     @if (Model.Anagrams.Count > 0)
     {
         <ul>

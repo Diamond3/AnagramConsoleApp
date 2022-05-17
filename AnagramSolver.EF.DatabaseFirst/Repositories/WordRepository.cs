@@ -1,5 +1,6 @@
 using AnagramSolver.Contracts.Interfaces;
 using AnagramSolver.EF.DatabaseFirst.Models;
+using Word = AnagramSolver.Contracts.Models.Word;
 
 namespace AnagramSolver.EF.DatabaseFirst.Repositories;
 
@@ -14,65 +15,59 @@ public class WordRepository : IWordRepository
 
     public void AddWord(string word)
     {
-        return;
     }
 
     public void UpdateWord(int id, string word)
     {
-        return;
     }
 
     public void DeleteWord(int id)
     {
-        return;
     }
 
-    public List<Contracts.Models.Word> GetAnagramsFromCachedWord(string? word)
+    public List<Word> GetAnagramsFromCachedWord(string? word)
     {
-
-        return new List<Contracts.Models.Word>();
+        return new List<Word>();
     }
 
-    public List<Contracts.Models.Word> GetAllWordsBySortedForm(string? sortedWord, string originalWord)
+    public List<Word> GetAllWordsBySortedForm(string? sortedWord, string originalWord)
     {
-        return _anagramDbContext.Words.AsEnumerable().Where(w => w.SortedForm.ToLower() == sortedWord 
-                                                              && !string.Equals(w.SecondForm, originalWord, StringComparison.CurrentCultureIgnoreCase))
-            .Select(word => new Contracts.Models.Word()
-                {
-                    WordId = word.WordId,
-                    FirstForm = word.FirstForm,
-                    SecondForm = word.SecondForm,
-                    SortedForm = word.SortedForm
-                }).ToList();
+        return _anagramDbContext.Words.AsEnumerable().Where(w => w.SortedForm.ToLower() == sortedWord
+                                                                 && !string.Equals(w.SecondForm, originalWord,
+                                                                     StringComparison.CurrentCultureIgnoreCase))
+            .Select(word => new Word
+            {
+                WordId = word.WordId,
+                FirstForm = word.FirstForm,
+                SecondForm = word.SecondForm,
+                SortedForm = word.SortedForm
+            }).ToList();
     }
 
-    public List<Contracts.Models.Word> GetAllWordsByWordPart(string? wordPart)
+    public List<Word> GetAllWordsByWordPart(string? wordPart)
     {
         throw new NotImplementedException();
     }
 
-    public void AddAllWordModels(List<Contracts.Models.Word> models)
+    public void AddAllWordModels(List<Word> models)
     {
-        return;
     }
 
-    public void InsertAnagramsCachedWord(string? word, List<Contracts.Models.Word> models)
+    public void InsertAnagramsCachedWord(string? word, List<Word> models)
     {
-        return;
     }
 
     public void ClearCachedWord()
     {
-        return;
     }
 
-    List<Contracts.Models.Word> IWordRepository.GetWords()
+    List<Word> IWordRepository.GetWords()
     {
-        return _anagramDbContext.Words.Select(word => new Contracts.Models.Word()
+        return _anagramDbContext.Words.Select(word => new Word
         {
             WordId = word.WordId,
             FirstForm = word.FirstForm,
-            SecondForm = word.SecondForm,
+            SecondForm = word.SecondForm
         }).ToList();
     }
 }

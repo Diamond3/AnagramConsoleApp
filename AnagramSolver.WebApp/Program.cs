@@ -1,16 +1,16 @@
 using AnagramSolver.BusinessLogic.DataAccess;
 using AnagramSolver.BusinessLogic.Services;
 using AnagramSolver.Contracts.Interfaces;
+using AnagramSolver.Contracts.Models;
 using AnagramSolver.EF.CodeFirst.Models;
-using Word = AnagramSolver.Contracts.Models.Word;
-using WordRepository = AnagramSolver.EF.CodeFirst.Repositories.WordRepository;
+using AnagramSolver.EF.CodeFirst.Repositories;
 
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllersWithViews();
 
 builder.Services
-    .AddScoped<IDataAccess<HashSet<string>>, DataAccessHashSet>()
+    .AddScoped<IDataAccess<HashSet<string>>, DataAccess>()
     .AddScoped<IWordService<Word>, WordService>()
     .AddScoped<IWordRepository, WordRepository>()
     .AddScoped<IFileService, FileService>()

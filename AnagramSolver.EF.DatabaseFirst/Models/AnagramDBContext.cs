@@ -2,7 +2,7 @@
 
 namespace AnagramSolver.EF.DatabaseFirst.Models;
 
-public partial class AnagramDBContext : DbContext
+public class AnagramDBContext : DbContext
 {
     public AnagramDBContext()
     {
@@ -67,8 +67,7 @@ public partial class AnagramDBContext : DbContext
                 .IsUnicode(false);
         });
 
-        OnModelCreatingPartial(modelBuilder);
+        //OnModelCreatingPartial(modelBuilder);
     }
-
-    partial void OnModelCreatingPartial(ModelBuilder modelBuilder);
+    
 }

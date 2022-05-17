@@ -4,7 +4,7 @@ using AnagramSolver.Contracts.Models;
 
 namespace AnagramSolver.BusinessLogic.DataAccess;
 
-public class DataAccessHashSet : IDataAccess<HashSet<string>>
+public class DataAccess : IDataAccess<HashSet<string>>
 {
     private const char Separator = '\t';
 
@@ -25,10 +25,17 @@ public class DataAccessHashSet : IDataAccess<HashSet<string>>
         return wordsSet;
     }
 
-    public void AddWordToFile(string filePath, string word)
+    public void AddWordToFile(string word, string filePath)
     {
         using var streamWriter = new StreamWriter(filePath, true);
         streamWriter.WriteLine($"{word}{Separator}filler{Separator}{word}{Separator}{1}");
+    }
+
+    public void AddOneWordToTestFile(string word)
+    {
+        var filePath = "Test.txt";
+        using var streamWriter = new StreamWriter(filePath, true);
+        streamWriter.WriteLine($"{word}");
     }
 
     public List<Word> ReadFileToList(string filePath)

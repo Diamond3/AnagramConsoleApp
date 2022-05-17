@@ -1,5 +1,4 @@
 using System.Diagnostics;
-using AnagramSolver.BusinessLogic;
 using AnagramSolver.BusinessLogic.Services;
 using AnagramSolver.Contracts.Interfaces;
 using AnagramSolver.Contracts.Models;
@@ -25,26 +24,23 @@ public class HomeController : Controller
     public IActionResult Index(string? word)
     {
         ViewData["Title"] = "Word";
-        
+
         var wordModel = new WordList
-            {
-                Word = "",
-                Anagrams = new List<Word>()
-            };
-        
+        {
+            Word = "",
+            Anagrams = new List<Word>()
+        };
+
         var ip = "111.111.111.111";
-        
+
         if (!_userService.AbleToDoAction(ip))
         {
             ModelState.AddModelError("Error", "0 actions left! Update/Add new word to get more actions");
             return View(wordModel);
         }
 
-        if (string.IsNullOrEmpty(word))
-        {
-            return View(wordModel);
-        }
-        
+        if (string.IsNullOrEmpty(word)) return View(wordModel);
+
         var option = new CookieOptions();
         var count = _cookieService.GetCount(Request.Cookies[CookieService.CountKey]);
         var cookiesList = new List<string>();
@@ -65,7 +61,7 @@ public class HomeController : Controller
         wordModel.Anagrams = _wordService.GetAnagrams(word);
 
         _userService.DecreaseCount(ip);
-        
+
         return View(wordModel);
     }
 
@@ -73,7 +69,7 @@ public class HomeController : Controller
     {
         ViewData["Title"] = "Anagrams";
         var wordsList = _wordService.GetAllWords();
-        return View("Anagrams",PaginatedList<Word>.Create(wordsList, pageNumber, PageSize));
+        return View("Anagrams", PaginatedList<Word>.Create(wordsList, pageNumber, PageSize));
     }
 
     public IActionResult SearchWords(string? wordPart)
@@ -114,15 +110,15 @@ public class HomeController : Controller
         ViewData["Title"] = "Database";
         return View();
     }
-    
+
     public IActionResult UpdateWord(int id, string word, int page)
     {
         var ip = "111.111.111.111";
         if (string.IsNullOrEmpty(word)) return Anagrams(page);
-        
+
         _wordService.UpdateWord(id, word);
         _userService.IncreaseCount(ip);
-        
+
         return Anagrams(page);
     }
 
@@ -135,29 +131,33 @@ public class HomeController : Controller
             ModelState.AddModelError("Error", "0 actions left! Update/Add new word to get more actions");
             return Anagrams(page);
         }
-        
+
         _wordService.DeleteWord(id);
         _userService.DecreaseCount(ip);
 
         return Anagrams(page);
     }
-    
+
     [HttpPost]
     public IActionResult AddWord(string? word)
     {
         ViewData["Title"] = "Database";
         var ip = "111.111.111.111";
-        
+
         if (string.IsNullOrEmpty(word))
+        {
             ModelState.AddModelError("Error", "Empty word!");
-        
+        }
+
         else if (_wordService.AddWord(word))
         {
             _userService.IncreaseCount(ip);
             ModelState.AddModelError("Error", "Added!");
         }
-        else 
+        else
+        {
             ModelState.AddModelError("Error", "Can't save!");
+        }
 
         return AddWord();
     }

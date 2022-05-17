@@ -30,7 +30,7 @@ public class HomeApiController : ControllerBase
     [HttpPost("MigrateWordsToDatabase")]
     public void MigrateWordsToDatabase()
     {
-        var dataAccess = new DataAccessHashSet();
+        var dataAccess = new DataAccess();
         var models = dataAccess.ReadFileToList("zodynas.txt");
         _wordService.InsertAllWordModels(models);
     }

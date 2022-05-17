@@ -55,6 +55,7 @@ public class WordService : IWordService<Word>
             Array.Sort(wordBytes);
             m.SortedForm = new string(wordBytes);
         }
+
         _wordRepository.AddAllWordModels(models);
     }
 
@@ -69,7 +70,7 @@ public class WordService : IWordService<Word>
         var exists = _wordRepository.GetWords()
             .Exists(w => w.FirstForm.ToLower() == word.ToLower()
                          || w.FirstForm.ToLower() == word.ToLower());
-        
+
         if (exists) return false;
         _wordRepository.AddWord(word);
         return true;

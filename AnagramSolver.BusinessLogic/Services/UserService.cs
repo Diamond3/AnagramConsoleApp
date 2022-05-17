@@ -2,15 +2,10 @@ using AnagramSolver.Contracts.Interfaces;
 
 namespace AnagramSolver.BusinessLogic.Services;
 
-public class UserService: IUserService
+public class UserService : IUserService
 {
-    private Dictionary<string, int> _users = new Dictionary<string, int>();
     private const int WordCount = 3;
-
-    public UserService()
-    {
-        
-    }
+    private readonly Dictionary<string, int> _users = new();
 
     public void AddUser(string ip)
     {

@@ -1,5 +1,4 @@
-﻿using AnagramSolver.BusinessLogic;
-using AnagramSolver.BusinessLogic.DataAccess;
+﻿using AnagramSolver.BusinessLogic.DataAccess;
 using AnagramSolver.BusinessLogic.Logic;
 using AnagramSolver.BusinessLogic.Repositories;
 using AnagramSolver.BusinessLogic.Services;
@@ -12,7 +11,7 @@ var services = new ServiceCollection();
 
 
 services
-    .AddScoped<IDataAccess<HashSet<string>>, DataAccessHashSet>()
+    .AddScoped<IDataAccess<HashSet<string>>, DataAccess>()
     /*.AddScoped<IWordRepository, WordRepository>()*/
     .AddScoped<IWordsServiceOld, WordsServiceOld>()
     .AddScoped<IAnagramSolverLogic, AnagramSolverLogic>()
