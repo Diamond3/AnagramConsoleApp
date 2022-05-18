@@ -10,8 +10,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AnagramSolver.Tests", "Anag
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AnagramSolver.WebApp", "AnagramSolver.WebApp\AnagramSolver.WebApp.csproj", "{79AD20AA-4120-4F54-BC19-BEB70B94145D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AnagramSolver.WebApp.Tests", "AnagramSolver.WebApp.Tests\AnagramSolver.WebApp.Tests.csproj", "{E51E6669-7EF6-4FF8-AA37-009646D552C5}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AnagramSolver.EF.DatabaseFirst", "AnagramSolver.EF.DatabaseFirst\AnagramSolver.EF.DatabaseFirst.csproj", "{7AF28238-52D6-438D-9DF4-35F65AADF97E}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AnagramSolver.EF.CodeFirst", "AnagramSolver.EF.CodeFirst\AnagramSolver.EF.CodeFirst.csproj", "{F7DB87D2-2BAF-4353-9B6D-AE442B30FC55}"
@@ -19,6 +17,10 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AnagramSolver.Cli.Generics", "AnagramSolver.Cli.Generics\AnagramSolver.Cli.Generics.csproj", "{4CA9EEB9-B567-42B0-8A33-B3D6A11DB244}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AnagramSolver.Generics", "AnagramSolver.Generics\AnagramSolver.Generics.csproj", "{21B02778-79CF-4853-B7BD-EA793622F1BC}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AnagramSolver.BusinessLogic.Tests", "AnagramSolver.BusinessLogic.Tests\AnagramSolver.BusinessLogic.Tests.csproj", "{459CDB68-E40A-4857-AA75-068998983ABE}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AnagramSolver.WebApp.Tests", "AnagramSolver.WebApp.Tests\AnagramSolver.WebApp.Tests.csproj", "{87323A6E-4849-4B12-8C1C-7D9EDD333498}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -46,10 +48,6 @@ Global
 		{79AD20AA-4120-4F54-BC19-BEB70B94145D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{79AD20AA-4120-4F54-BC19-BEB70B94145D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{79AD20AA-4120-4F54-BC19-BEB70B94145D}.Release|Any CPU.Build.0 = Release|Any CPU
-		{E51E6669-7EF6-4FF8-AA37-009646D552C5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{E51E6669-7EF6-4FF8-AA37-009646D552C5}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{E51E6669-7EF6-4FF8-AA37-009646D552C5}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{E51E6669-7EF6-4FF8-AA37-009646D552C5}.Release|Any CPU.Build.0 = Release|Any CPU
 		{7AF28238-52D6-438D-9DF4-35F65AADF97E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{7AF28238-52D6-438D-9DF4-35F65AADF97E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7AF28238-52D6-438D-9DF4-35F65AADF97E}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -66,5 +64,13 @@ Global
 		{21B02778-79CF-4853-B7BD-EA793622F1BC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{21B02778-79CF-4853-B7BD-EA793622F1BC}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{21B02778-79CF-4853-B7BD-EA793622F1BC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{459CDB68-E40A-4857-AA75-068998983ABE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{459CDB68-E40A-4857-AA75-068998983ABE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{459CDB68-E40A-4857-AA75-068998983ABE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{459CDB68-E40A-4857-AA75-068998983ABE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{87323A6E-4849-4B12-8C1C-7D9EDD333498}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{87323A6E-4849-4B12-8C1C-7D9EDD333498}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{87323A6E-4849-4B12-8C1C-7D9EDD333498}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{87323A6E-4849-4B12-8C1C-7D9EDD333498}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
