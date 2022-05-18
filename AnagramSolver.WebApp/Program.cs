@@ -1,3 +1,4 @@
+using AnagramSolver.API.Services.Services;
 using AnagramSolver.BusinessLogic.DataAccess;
 using AnagramSolver.BusinessLogic.Services;
 using AnagramSolver.Contracts.Interfaces;
@@ -11,7 +12,7 @@ builder.Services.AddControllersWithViews();
 
 builder.Services
     .AddScoped<IDataAccess<HashSet<string>>, DataAccess>()
-    .AddScoped<IWordService<Word>, WordService>()
+    .AddScoped<IWordService<Word>, AnagramSolverApiService>()
     .AddScoped<IWordRepository, WordRepository>()
     .AddScoped<IFileService, FileService>()
     .AddScoped<ICookieService, CookieService>()

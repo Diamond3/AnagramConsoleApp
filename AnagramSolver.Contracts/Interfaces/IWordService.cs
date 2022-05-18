@@ -11,4 +11,5 @@ public interface IWordService<T>
     bool AddWord(string word);
     void UpdateWord(int id, string word);
     void DeleteWord(int id);
+    Task<List<T>> GetAnagramsAsync(string? word);
 }

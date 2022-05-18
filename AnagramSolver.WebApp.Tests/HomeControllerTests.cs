@@ -1,9 +1,9 @@
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using AnagramSolver.Contracts.Interfaces;
 using AnagramSolver.Contracts.Models;
 using AnagramSolver.WebApp.Controllers;
 using AnagramSolver.WebApp.Models;
-using System.Web;
 using Microsoft.AspNetCore.Mvc;
 using Moq;
 using NUnit.Framework;
@@ -11,7 +11,7 @@ using Shouldly;
 
 namespace AnagramSolver.WebApp.Tests;
 
-public class HomeControllerTests
+public class HomeControllerTests: ControllerBase
 {
     private HomeController _homeController;
     [SetUp]
@@ -43,9 +43,8 @@ public class HomeControllerTests
             .Returns(true);
     }
 
-    
     [Explicit, Test]
-    public void Index_ShouldReturnAnagramsList()
+    public async Task Index_ShouldReturnAnagramsList()
     {
         //Arrange
         var expectedAnagramsList = new List<Word>()
@@ -55,13 +54,20 @@ public class HomeControllerTests
         };
         var expectedWord = "zzodis";
 
-        //Act
-        var viewResult = _homeController.Index(expectedWord) as ViewResult;
-        var wordList = (WordList)viewResult.Model;
 
-        var actualAnagramsList = wordList.Anagrams;
-        var actualWord = wordList.Word;
+        ViewResult viewResult;
+        WordList wordList;
+
+        List<Word> actualAnagramsList = new List<Word>();
+        string actualWord = "";
         
+        //Act
+        viewResult = await _homeController.Index(expectedWord) as ViewResult;
+        wordList = (WordList)viewResult.Model;
+
+        actualAnagramsList = wordList.Anagrams;
+        actualWord = wordList.Word;
+
         //Assert
         actualAnagramsList.ShouldBe(expectedAnagramsList, ignoreOrder: true);
         actualWord.ShouldBe(expectedWord);

@@ -21,7 +21,7 @@ public class HomeController : Controller
         _userService = userService;
     }
 
-    public IActionResult Index(string? word)
+    public async Task<IActionResult> Index(string? word)
     {
         ViewData["Title"] = "Word";
 
@@ -58,7 +58,7 @@ public class HomeController : Controller
         }
 
         wordModel.Word = word;
-        wordModel.Anagrams = _wordService.GetAnagrams(word);
+        wordModel.Anagrams = await _wordService.GetAnagramsAsync(word);
 
         _userService.DecreaseCount(ip);
 

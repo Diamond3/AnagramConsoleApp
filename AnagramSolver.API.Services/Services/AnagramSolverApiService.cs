@@ -1,17 +1,20 @@
+using AnagramSolver.API.Services.Models;
 using AnagramSolver.Contracts.Interfaces;
 using AnagramSolver.Contracts.Models;
+using Newtonsoft.Json;
 
-namespace AnagramSolver.BusinessLogic.Services;
+namespace AnagramSolver.API.Services.Services;
 
-public class WordService : IWordService<Word>
+public class AnagramSolverApiService: IWordService<Word>
 {
     private readonly IWordRepository _wordRepository;
-
-    public WordService(IWordRepository wordRepository)
+    private static readonly HttpClient client = new();
+    
+    public AnagramSolverApiService(IWordRepository wordRepository)
     {
         _wordRepository = wordRepository;
     }
-
+    
     public List<Word> GetAllWords()
     {
         return _wordRepository.GetWords();
@@ -19,20 +22,29 @@ public class WordService : IWordService<Word>
 
     public List<Word> GetAnagrams(string? word)
     {
+        throw new NotImplementedException();
+    }
+
+    public async Task<List<Word>> GetAnagramsAsync(string? word)
+    {
         if (string.IsNullOrEmpty(word)) return new List<Word>();
+        
+        var responseBody = await client.GetStringAsync("http://www.anagramica.com/best/" + word);
+        responseBody = responseBody
+            .Replace("\n", "")
+            .Replace("\r", "")
+            .Replace(" ", "");
 
-        var anagrams = GetAnagramsFromCachedWord(word);
-
-        if (anagrams.Count > 0) return anagrams;
-
-        var sortedArray = word.ToLower().ToArray();
-        Array.Sort(sortedArray);
-        var sortedWord = new string(sortedArray);
-
-        anagrams = _wordRepository.GetAllWordsBySortedForm(sortedWord, word);
-
-        _wordRepository.InsertAnagramsCachedWord(word, anagrams);
-        return anagrams;
+        var bestResponseModel = JsonConvert.DeserializeObject<BestResponseModel>(responseBody);
+        if (bestResponseModel == null) return new List<Word>();
+        if (bestResponseModel.Words == null) return new List<Word>();
+        
+        return bestResponseModel.Words
+            .Select(word => new Word
+            {
+                FirstForm = word,
+                SecondForm = word
+            }).ToList();
     }
 
     public List<Word> GetWordsByWordPart(string? wordPart)
@@ -85,11 +97,6 @@ public class WordService : IWordService<Word>
     public void DeleteWord(int id)
     {
         _wordRepository.DeleteWord(id);
-    }
-
-    public async Task<List<Word>> GetAnagramsAsync(string? word)
-    {
-        return GetAnagrams(word);
     }
 
     public List<Word> GetAnagramsFromCachedWord(string? word)
