@@ -58,29 +58,29 @@ public class HomeController : Controller
         }
 
         wordModel.Word = word;
-        wordModel.Anagrams = await _wordService.GetAnagramsAsync(word);
+        wordModel.Anagrams = await _wordService.GetAnagrams(word);
 
         _userService.DecreaseCount(ip);
 
         return View(wordModel);
     }
 
-    public IActionResult Anagrams(int pageNumber = 1)
+    public async Task<IActionResult> Anagrams(int pageNumber = 1)
     {
         ViewData["Title"] = "Anagrams";
-        var wordsList = _wordService.GetAllWords();
+        var wordsList = await _wordService.GetAllWords();
         return View("Anagrams", PaginatedList<Word>.Create(wordsList, pageNumber, PageSize));
     }
 
-    public IActionResult SearchWords(string? wordPart)
+    public async Task<IActionResult> SearchWords(string? wordPart)
     {
         ViewData["Title"] = "Search";
         if (string.IsNullOrEmpty(wordPart)) return View(new List<Word>());
-        var models = _wordService.GetWordsByWordPart(wordPart);
+        var models = await _wordService.GetWordsByWordPart(wordPart);
         return View(models);
     }
 
-    public IActionResult SearchWordsInfo(string? word)
+    public async Task<IActionResult> SearchWordsInfo(string? word)
     {
         ViewData["Title"] = "SearchInfo";
 
@@ -92,7 +92,7 @@ public class HomeController : Controller
 
         var stopWatch = new Stopwatch();
         stopWatch.Start();
-        var models = _wordService.GetAnagrams(word);
+        var models = await _wordService.GetAnagrams(word);
         stopWatch.Stop();
 
         userInfo.SearchTime = stopWatch.ElapsedMilliseconds;
@@ -105,41 +105,41 @@ public class HomeController : Controller
     }
 
     [HttpGet]
-    public IActionResult AddWord()
+    public async Task<IActionResult> AddWord()
     {
         ViewData["Title"] = "Database";
         return View();
     }
 
-    public IActionResult UpdateWord(int id, string word, int page)
+    public async Task<IActionResult> UpdateWord(int id, string word, int page)
     {
         var ip = "111.111.111.111";
-        if (string.IsNullOrEmpty(word)) return Anagrams(page);
+        if (string.IsNullOrEmpty(word)) return await Anagrams(page);
 
-        _wordService.UpdateWord(id, word);
+        await _wordService.UpdateWord(id, word);
         _userService.IncreaseCount(ip);
 
-        return Anagrams(page);
+        return await Anagrams(page);
     }
 
-    public IActionResult DeleteWord(int id, int page)
+    public async Task<IActionResult> DeleteWord(int id, int page)
     {
         var ip = "111.111.111.111";
 
         if (!_userService.AbleToDoAction(ip))
         {
             ModelState.AddModelError("Error", "0 actions left! Update/Add new word to get more actions");
-            return Anagrams(page);
+            return await Anagrams(page);
         }
 
-        _wordService.DeleteWord(id);
+        await _wordService.DeleteWord(id);
         _userService.DecreaseCount(ip);
 
-        return Anagrams(page);
+        return await Anagrams(page);
     }
 
     [HttpPost]
-    public IActionResult AddWord(string? word)
+    public async Task<IActionResult> AddWord(string? word)
     {
         ViewData["Title"] = "Database";
         var ip = "111.111.111.111";
@@ -149,7 +149,7 @@ public class HomeController : Controller
             ModelState.AddModelError("Error", "Empty word!");
         }
 
-        else if (_wordService.AddWord(word))
+        else if (await _wordService.AddWord(word))
         {
             _userService.IncreaseCount(ip);
             ModelState.AddModelError("Error", "Added!");
@@ -159,6 +159,6 @@ public class HomeController : Controller
             ModelState.AddModelError("Error", "Can't save!");
         }
 
-        return AddWord();
+        return await AddWord();
     }
 }

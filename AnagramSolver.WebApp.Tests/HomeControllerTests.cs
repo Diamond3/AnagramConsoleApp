@@ -30,9 +30,9 @@ public class HomeControllerTests: ControllerBase
         _homeController = new HomeController(wordServiceMock.Object, cookieServiceMock.Object, userServiceMock.Object);
         
         wordServiceMock.Setup(x => x.GetAllWords())
-            .Returns(wordsList);
+            .ReturnsAsync(wordsList);
         wordServiceMock.Setup(x => x.GetAnagrams(It.IsAny<string>()))
-            .Returns(wordsList);
+            .ReturnsAsync(wordsList);
         
         cookieServiceMock.Setup(x => x.GetCount(It.IsAny<string>()))
             .Returns(0);
@@ -74,7 +74,7 @@ public class HomeControllerTests: ControllerBase
     }
     
     [Test]
-    public void SearchAnagramsWithInfo_ReturnsModelWithAllAnagrams()
+    public async Task SearchAnagramsWithInfo_ReturnsModelWithAllAnagrams()
     {
         //Arrange
         var expectedAnagramsList = new List<Word>()
@@ -85,7 +85,7 @@ public class HomeControllerTests: ControllerBase
         var expectedWord = "zzodis";
 
         //Act
-        var viewResult = _homeController.SearchWordsInfo(expectedWord) as ViewResult;
+        var viewResult = await _homeController.SearchWordsInfo(expectedWord) as ViewResult;
         var userInfo = (UserInfo)viewResult.Model;
 
         var actualAnagramsList = userInfo.WordList.Anagrams;

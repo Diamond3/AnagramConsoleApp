@@ -12,7 +12,7 @@ builder.Services.AddControllersWithViews();
 
 builder.Services
     .AddScoped<IDataAccess<HashSet<string>>, DataAccess>()
-    .AddScoped<IWordService<Word>, AnagramSolverApiService>()
+    .AddScoped<IWordService<Word>, WordService>()
     .AddScoped<IWordRepository, WordRepository>()
     .AddScoped<IFileService, FileService>()
     .AddScoped<ICookieService, CookieService>()

@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using AnagramSolver.BusinessLogic.Services;
 using AnagramSolver.Contracts.Interfaces;
 using AnagramSolver.Contracts.Models;
@@ -38,17 +39,17 @@ public class WordServiceTest
         
         _wordRepositoryMock
             .Setup(x => x.GetAnagramsFromCachedWord(It.IsAny<string>()))
-            .Returns(cachedWordsList);
+            .ReturnsAsync(cachedWordsList);
         _wordRepositoryMock
             .Setup(x => x.GetAllWordsBySortedForm(It.IsAny<string>(), It.IsAny<string>()))
-            .Returns(wordsList);
+            .ReturnsAsync(wordsList);
         _wordRepositoryMock
             .Setup(x => x.GetWords())
-            .Returns(wordsList);
+            .ReturnsAsync(wordsList);
     }
 
     [Test]
-    public void GetAllWords_ShouldGetAllWords()
+    public async Task GetAllWords_ShouldGetAllWords()
     {
         //Arrange
         var expectedList = new List<Word>()
@@ -58,14 +59,14 @@ public class WordServiceTest
         };
         
         //Act
-        var wordList = _wordService.GetAllWords();
+        var wordList = await _wordService.GetAllWords();
         
         //Assert
         wordList.ShouldBe(expectedList, ignoreOrder: true);
     }
     
     [Test]
-    public void GetAnagrams_ShouldGetAllAnagrams_WithoutCallingGetAllWordsBySortedForm()
+    public async Task GetAnagrams_ShouldGetAllAnagrams_WithoutCallingGetAllWordsBySortedForm()
     {
         //Arrange
         var word = "zodis";
@@ -80,7 +81,7 @@ public class WordServiceTest
         };
         
         //Act
-        var anagramsList = _wordService.GetAnagrams(word);
+        var anagramsList = await _wordService.GetAnagrams(word);
         
         //Assert
         _wordRepositoryMock.Verify(w => w.GetAnagramsFromCachedWord(word), Times.Once());
@@ -89,7 +90,7 @@ public class WordServiceTest
     }
     
     [Test]
-    public void GetAnagrams_ShouldGetAllAnagrams()
+    public async Task GetAnagrams_ShouldGetAllAnagrams()
     {
         //Arrange
         var word = "zodis";
@@ -105,10 +106,10 @@ public class WordServiceTest
         
         _wordRepositoryMock
             .Setup(x => x.GetAnagramsFromCachedWord(It.IsAny<string>()))
-            .Returns(new List<Word>());
+            .ReturnsAsync(new List<Word>());
         
         //Act
-        var anagramsList = _wordService.GetAnagrams(word);
+        var anagramsList = await _wordService.GetAnagrams(word);
         
         //Assert
         _wordRepositoryMock.Verify(w => w.GetAnagramsFromCachedWord(word), Times.Once());
@@ -117,7 +118,7 @@ public class WordServiceTest
     }
     
     [Test]
-    public void GetAnagrams_ShouldReturnEmpty_WhenGivenNullWord()
+    public async Task GetAnagrams_ShouldReturnEmpty_WhenGivenNullWord()
     {
         //Arrange
 
@@ -125,10 +126,10 @@ public class WordServiceTest
         
         _wordRepositoryMock
             .Setup(x => x.GetAnagramsFromCachedWord(It.IsAny<string>()))
-            .Returns(new List<Word>());
+            .ReturnsAsync(new List<Word>());
         
         //Act
-        var anagramsList = _wordService.GetAnagrams(null);
+        var anagramsList = await _wordService.GetAnagrams(null);
         
         //Assert
         _wordRepositoryMock.Verify(w => w.GetAnagramsFromCachedWord(It.IsAny<string?>()), Times.Never());

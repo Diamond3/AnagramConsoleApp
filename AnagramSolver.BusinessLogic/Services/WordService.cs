@@ -12,16 +12,16 @@ public class WordService : IWordService<Word>
         _wordRepository = wordRepository;
     }
 
-    public List<Word> GetAllWords()
+    public async Task<List<Word>> GetAllWords()
     {
-        return _wordRepository.GetWords();
+        return await _wordRepository.GetWords();
     }
 
-    public List<Word> GetAnagrams(string? word)
+    public async Task<List<Word>> GetAnagrams(string? word)
     {
         if (string.IsNullOrEmpty(word)) return new List<Word>();
 
-        var anagrams = GetAnagramsFromCachedWord(word);
+        var anagrams = await GetAnagramsFromCachedWord(word);
 
         if (anagrams.Count > 0) return anagrams;
 
@@ -29,25 +29,25 @@ public class WordService : IWordService<Word>
         Array.Sort(sortedArray);
         var sortedWord = new string(sortedArray);
 
-        anagrams = _wordRepository.GetAllWordsBySortedForm(sortedWord, word);
+        anagrams = await _wordRepository.GetAllWordsBySortedForm(sortedWord, word);
 
-        _wordRepository.InsertAnagramsCachedWord(word, anagrams);
+        await _wordRepository.InsertAnagramsCachedWord(word, anagrams);
         return anagrams;
     }
 
-    public List<Word> GetWordsByWordPart(string? wordPart)
+    public async Task<List<Word>> GetWordsByWordPart(string? wordPart)
     {
         if (string.IsNullOrEmpty(wordPart)) return new List<Word>();
-        return _wordRepository.GetAllWordsByWordPart(wordPart);
+        return await _wordRepository.GetAllWordsByWordPart(wordPart);
     }
 
-    public void InsertAnagramsCachedWord(string? word, List<Word> wordList)
+    public async Task InsertAnagramsCachedWord(string? word, List<Word> wordList)
     {
         if (string.IsNullOrEmpty(word)) return;
-        _wordRepository.InsertAnagramsCachedWord(word, wordList);
+        await _wordRepository.InsertAnagramsCachedWord(word, wordList);
     }
 
-    public void InsertAllWordModels(List<Word> models)
+    public async Task InsertAllWordModels(List<Word> models)
     {
         foreach (var m in models)
         {
@@ -56,45 +56,42 @@ public class WordService : IWordService<Word>
             m.SortedForm = new string(wordBytes);
         }
 
-        _wordRepository.AddAllWordModels(models);
+        await _wordRepository.AddAllWordModels(models);
     }
 
-    public void ClearCachedWord()
+    public async Task ClearCachedWord()
     {
-        _wordRepository.ClearCachedWord();
+        await _wordRepository.ClearCachedWord();
     }
 
-    public bool AddWord(string word)
+    public async Task<bool> AddWord(string word)
     {
         if (string.IsNullOrEmpty(word)) return false;
-        var exists = _wordRepository.GetWords()
-            .Exists(w => w.FirstForm.ToLower() == word.ToLower()
-                         || w.FirstForm.ToLower() == word.ToLower());
+        var wordList = await _wordRepository.GetWords();
+        var exists = wordList.Exists(w =>
+            w.FirstForm.ToLower() == word.ToLower()
+            || w.FirstForm.ToLower() == word.ToLower());
 
         if (exists) return false;
-        _wordRepository.AddWord(word);
+        await _wordRepository.AddWord(word);
+        
         return true;
     }
 
-    public void UpdateWord(int id, string word)
+    public async Task UpdateWord(int id, string word)
     {
         if (string.IsNullOrEmpty(word)) return;
-        _wordRepository.UpdateWord(id, word);
+        await _wordRepository.UpdateWord(id, word);
     }
 
-    public void DeleteWord(int id)
+    public async Task DeleteWord(int id)
     {
-        _wordRepository.DeleteWord(id);
+        await _wordRepository.DeleteWord(id);
     }
 
-    public async Task<List<Word>> GetAnagramsAsync(string? word)
-    {
-        return GetAnagrams(word);
-    }
-
-    public List<Word> GetAnagramsFromCachedWord(string? word)
+    public async Task<List<Word>> GetAnagramsFromCachedWord(string? word)
     {
         if (string.IsNullOrEmpty(word)) return new List<Word>();
-        return _wordRepository.GetAnagramsFromCachedWord(word);
+        return await _wordRepository.GetAnagramsFromCachedWord(word);
     }
 }

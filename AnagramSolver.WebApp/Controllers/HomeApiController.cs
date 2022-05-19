@@ -21,34 +21,34 @@ public class HomeApiController : ControllerBase
 
     // api/homeapi/clearCachedWord
     [HttpPost("clearCachedWord")]
-    public void ClearTable()
+    public async Task ClearTable()
     {
-        _wordService.ClearCachedWord();
+        await _wordService.ClearCachedWord();
     }
 
     // api/homeapi/MigrateWordsToDatabase
     [HttpPost("MigrateWordsToDatabase")]
-    public void MigrateWordsToDatabase()
+    public async Task MigrateWordsToDatabase()
     {
         var dataAccess = new DataAccess();
         var models = dataAccess.ReadFileToList("zodynas.txt");
-        _wordService.InsertAllWordModels(models);
+        await _wordService.InsertAllWordModels(models);
     }
 
     // api/homeapi
     [HttpGet]
-    public IEnumerable<Word> Get()
+    public async Task<IEnumerable<Word>> Get()
     {
-        return _wordService.GetAllWords().Take(50);
+        return await _wordService.GetAllWords();
     }
 
     // api/homeapi/word
     [HttpGet("{word}")]
-    public IEnumerable<Word> GetAnagrams(string word)
+    public async Task<IEnumerable<Word>> GetAnagrams(string word)
     {
         try
         {
-            return _wordService.GetAnagrams(word);
+            return await _wordService.GetAnagrams(word);
         }
         catch (Exception)
         {

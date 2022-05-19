@@ -12,45 +12,44 @@ public class WordRepository : IWordRepository
     private const string Connection =
         "data source=LT-LIT-SC-0597;initial catalog=AnagramDB;trusted_connection=true;TrustServerCertificate=true;MultipleActiveResultSets=True";
 
-    public List<Word> GetWords()
+    public async Task<List<Word>> GetWords()
     {
         var wordModelList = new List<Word>();
 
-        using var connection = new SqlConnection(Connection);
+        await using var connection = new SqlConnection(Connection);
         connection.Open();
 
         var command = connection.CreateCommand();
         command.CommandText = "SELECT WordId, FirstForm, Form, SecondForm FROM Word";
 
-        var reader = command.ExecuteReader();
-        while (reader.Read())
+        var reader = await command.ExecuteReaderAsync();
+        while (await reader.ReadAsync())
         {
-            var newWordModel = new Word
+            wordModelList.Add(new Word
             {
                 WordId = (int)reader["WordId"],
                 FirstForm = (string)reader["FirstForm"],
                 SecondForm = (string)reader["SecondForm"],
                 Form = (string)reader["Form"]
-            };
-            wordModelList.Add(newWordModel);
+            });
         }
 
         return wordModelList;
     }
 
-    public void AddWord(string word)
+    public async Task AddWord(string word)
     {
     }
 
-    public void UpdateWord(int id, string word)
+    public async Task UpdateWord(int id, string word)
     {
     }
 
-    public void DeleteWord(int id)
+    public async Task DeleteWord(int id)
     {
     }
 
-    public List<Word> GetAnagramsFromCachedWord(string? word)
+    public async Task<List<Word>> GetAnagramsFromCachedWord(string? word)
     {
         var wordModelList = new List<Word>();
         if (string.IsNullOrEmpty(word)) return wordModelList;
@@ -77,15 +76,15 @@ public class WordRepository : IWordRepository
         return wordModelList;
     }
 
-    public List<Word> GetAllWordsBySortedForm(string? sortedWord, string originalWord)
+    public async Task<List<Word>> GetAllWordsBySortedForm(string? sortedWord, string originalWord)
     {
         if (string.IsNullOrEmpty(sortedWord)) return new List<Word>();
 
 
         var wordModelList = new List<Word>();
 
-        using var connection = new SqlConnection(Connection);
-        connection.Open();
+        await using var connection = new SqlConnection(Connection);
+        await connection.OpenAsync();
 
         var command = connection.CreateCommand();
         command.CommandText =
@@ -93,8 +92,8 @@ public class WordRepository : IWordRepository
         command.Parameters.AddWithValue("@sortedWord", sortedWord);
         command.Parameters.AddWithValue("@word", originalWord);
 
-        var reader = command.ExecuteReader();
-        while (reader.Read())
+        var reader = await command.ExecuteReaderAsync();
+        while (await reader.ReadAsync())
         {
             var newWordModel = new Word
             {
@@ -106,19 +105,19 @@ public class WordRepository : IWordRepository
         return wordModelList;
     }
 
-    public List<Word> GetAllWordsByWordPart(string? wordPart)
+    public async Task<List<Word>> GetAllWordsByWordPart(string? wordPart)
     {
         var wordModelList = new List<Word>();
 
-        using var connection = new SqlConnection(Connection);
-        connection.Open();
+        await using var connection = new SqlConnection(Connection);
+        await connection.OpenAsync();
 
         var command = connection.CreateCommand();
         command.CommandText = "SELECT WordId, FirstForm, Form, SecondForm FROM Word WHERE SecondForm LIKE @wordPart";
         command.Parameters.AddWithValue("@wordPart", "%" + wordPart + "%");
 
-        var reader = command.ExecuteReader();
-        while (reader.Read())
+        var reader = await command.ExecuteReaderAsync();
+        while (await reader.ReadAsync())
         {
             var newWordModel = new Word
             {
@@ -133,10 +132,10 @@ public class WordRepository : IWordRepository
         return wordModelList;
     }
 
-    public void AddAllWordModels(List<Word> models)
+    public async Task AddAllWordModels(List<Word> models)
     {
-        using var connection = new SqlConnection(Connection);
-        connection.Open();
+        await using var connection = new SqlConnection(Connection);
+        await connection.OpenAsync();
 
         var query = "INSERT INTO Word (FirstForm, Form, SecondForm, SortedForm)" +
                     "VALUES (@FirstForm, @Form, @SecondForm, @SortedForm)";
@@ -157,40 +156,40 @@ public class WordRepository : IWordRepository
             Array.Sort(sortedArray);
 
             command.Parameters["@SortedForm"].Value = new string(sortedArray);
-            command.ExecuteNonQuery();
+            await command.ExecuteNonQueryAsync();
         }
     }
 
-    public void InsertAnagramsCachedWord(string? word, List<Word> models)
+    public async Task InsertAnagramsCachedWord(string? word, List<Word> models)
     {
-        using var connection = new SqlConnection(Connection);
-        connection.Open();
+        await using var connection = new SqlConnection(Connection);
+        await connection.OpenAsync();
 
         var query = "INSERT INTO CachedWord (Word, Anagram)" +
                     "VALUES (@Word, @Anagram)";
 
         if (models.Count == 0)
             models.Add(new Word
-            {
-                SecondForm = "No anagrams"
-            });
+                {
+                    SecondForm = "No anagrams"
+                });
 
         foreach (var model in models)
         {
             var command = new SqlCommand(query, connection);
             command.Parameters.Add("@Word", SqlDbType.VarChar, 255).Value = word;
             command.Parameters.Add("@Anagram", SqlDbType.VarChar, 255).Value = model.SecondForm;
-            command.ExecuteNonQuery();
+            await command.ExecuteNonQueryAsync();
         }
     }
 
-    public void ClearCachedWord()
+    public async Task ClearCachedWord()
     {
-        using var connection = new SqlConnection(Connection);
-        connection.Open();
+        await using var connection = new SqlConnection(Connection);
+        await connection.OpenAsync();
 
         var command = connection.CreateCommand();
         command.CommandText = "EXEC dbo.clearCachedWord";
-        command.ExecuteNonQuery();
+        await command.ExecuteNonQueryAsync();
     }
 }
