@@ -1,7 +1,6 @@
-using System;
 using NUnit.Framework;
 
-namespace AnagramSolver.Generics;
+namespace AnagramSolver.Generics.Tests;
 
 public class Tests
 {

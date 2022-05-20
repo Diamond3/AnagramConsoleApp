@@ -26,6 +26,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AnagramSolver.API.Services"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ApartmentApp.CLI", "ApartmentApp.CLI\ApartmentApp.CLI.csproj", "{1B21B4A2-6C77-452F-BBEB-5165BD33D6E1}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AnagramSolver.Generics.Tests", "AnagramSolver.Generics.Tests\AnagramSolver.Generics.Tests.csproj", "{81856754-D7EF-4200-B0E8-972DAC3B3961}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -84,5 +86,9 @@ Global
 		{1B21B4A2-6C77-452F-BBEB-5165BD33D6E1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1B21B4A2-6C77-452F-BBEB-5165BD33D6E1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1B21B4A2-6C77-452F-BBEB-5165BD33D6E1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{81856754-D7EF-4200-B0E8-972DAC3B3961}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{81856754-D7EF-4200-B0E8-972DAC3B3961}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{81856754-D7EF-4200-B0E8-972DAC3B3961}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{81856754-D7EF-4200-B0E8-972DAC3B3961}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

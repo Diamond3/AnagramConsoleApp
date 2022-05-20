@@ -58,15 +58,12 @@ public class HomeControllerTests: ControllerBase
         ViewResult viewResult;
         WordList wordList;
 
-        List<Word> actualAnagramsList = new List<Word>();
-        string actualWord = "";
-        
         //Act
         viewResult = await _homeController.Index(expectedWord) as ViewResult;
         wordList = (WordList)viewResult.Model;
 
-        actualAnagramsList = wordList.Anagrams;
-        actualWord = wordList.Word;
+        var actualAnagramsList = wordList.Anagrams;
+        var actualWord = wordList.Word;
 
         //Assert
         actualAnagramsList.ShouldBe(expectedAnagramsList, ignoreOrder: true);
